@@ -2,13 +2,14 @@ package com.example.memeit
 
 import android.content.Context
 import android.content.Intent
+import android.net.Uri
 import android.os.Bundle
 import android.view.*
-import android.widget.Button
 import android.widget.ImageView
 import androidx.appcompat.widget.SearchView
 import android.widget.TextView
 import android.widget.Toast
+import androidx.browser.customtabs.CustomTabsIntent
 import androidx.core.content.ContextCompat.startActivity
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -39,16 +40,20 @@ class redditfragment : Fragment(), MyAdapter.theItemClicked {
 
     }
 
+
     override fun onItemClicked(item: Memes) {
-        val i = Intent(Intent.ACTION_SEND)
-        i.type = "text/plain"
-        i.putExtra(Intent.EXTRA_TEXT, "Hi, checkout this meme ${item.url}")
-        startActivity(Intent.createChooser(i, "Share this meme with"))
+       val builder = CustomTabsIntent.Builder()
+        val CustomTabsIntent = builder.build()
+        CustomTabsIntent.launchUrl(this.requireContext(), Uri.parse(item.url))
     }
 
+
+
     override fun onLongItemClicked(item: Memes) {
-        Toast.makeText(context, "to be implemented", Toast.LENGTH_SHORT).show()
+
     }
+
+
 
     override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
         inflater.inflate(R.menu.search_menu, menu)
@@ -113,7 +118,24 @@ class MyAdapter(private val Listener: theItemClicked) :
         val poster: TextView = itemView.findViewById(R.id.Subreddit)
         val coverImage: ImageView = itemView.findViewById(R.id.MemeImage)
         val ShareListener: ImageView = itemView.findViewById(R.id.ShareButton)
+
+        init {
+           ShareListener.setOnClickListener{
+               val currentItems = dataSet[adapterPosition]
+               val item: Memes
+               val i = Intent(Intent.ACTION_SEND)
+               i.type = "text/plain"
+               i.putExtra(Intent.EXTRA_TEXT, "Hi, checkout this meme ${currentItems.url}")
+               startActivity(it.context, Intent.createChooser(i,"share this meme with"), Bundle())
+
+           }
+
+        }
+
+
+
     }
+//
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         val view =
@@ -122,6 +144,7 @@ class MyAdapter(private val Listener: theItemClicked) :
         view.setOnClickListener {
             Listener.onItemClicked(dataSet[theViewHolder.adapterPosition])
         }
+
 
 
 
@@ -136,6 +159,7 @@ class MyAdapter(private val Listener: theItemClicked) :
         val currentItems = dataSet[position]
         holder.memeTitle.text = currentItems.title
         holder.poster.text = currentItems.subreddit
+
         Glide.with(holder.itemView.context).load(currentItems.url).into(holder.coverImage)
 
     }
