@@ -10,6 +10,7 @@ import android.os.Bundle
 import android.view.Menu
 import android.widget.Toast
 import androidx.appcompat.widget.SearchView
+import androidx.core.app.ActivityCompat
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
 import androidx.fragment.app.FragmentPagerAdapter
@@ -25,6 +26,7 @@ class MainActivity : AppCompatActivity() {
         tabLayout.getTabAt(1)?.setIcon(R.drawable.ic_gif)
         tabLayout.getTabAt(2)?.setIcon(R.drawable.ic_sticker)
         tabLayout.getTabAt(3)?.setIcon(R.drawable.ic_gallery)
+
     }
 
 
