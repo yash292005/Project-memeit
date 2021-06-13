@@ -10,6 +10,7 @@ import android.content.pm.PackageManager
 import android.net.Uri
 import android.os.Bundle
 import android.os.Environment
+import android.util.Log
 import android.view.*
 import android.widget.ImageView
 import android.widget.TextView
@@ -157,6 +158,11 @@ class MyAdapter(private val Listener: theItemClicked) :
                 downloadImage("Memeit Image", currentItems.url)
 
 
+            }
+            poster.setOnClickListener {
+                val builder = CustomTabsIntent.Builder()
+                val CustomTabsIntent = builder.build()
+                CustomTabsIntent.launchUrl(it.context, Uri.parse("https://www.reddit.com/"))
             }
 
 

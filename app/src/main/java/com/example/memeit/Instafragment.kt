@@ -1,11 +1,13 @@
 package com.example.memeit
 
 import android.content.Intent
+import android.net.Uri
 import android.os.Bundle
 import android.view.*
 import androidx.fragment.app.Fragment
 import android.widget.Toast
 import androidx.appcompat.widget.SearchView
+import androidx.browser.customtabs.CustomTabsIntent
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.android.volley.toolbox.JsonObjectRequest
@@ -64,10 +66,9 @@ class Instafragment : Fragment(), WallPaperAdapter.WallPaperClicked {
         }
     }
     override fun onItemClicked(item: WallPaper) {
-        val i = Intent(Intent.ACTION_SEND)
-        i.type = "text/plain"
-        i.putExtra(Intent.EXTRA_TEXT, "Hi, checkout this Wallpaper ${item.url}")
-        startActivity(Intent.createChooser(i, "Share this Wallpaper with"))
+        val builder = CustomTabsIntent.Builder()
+        val CustomTabsIntent = builder.build()
+        CustomTabsIntent.launchUrl(this.requireContext(), Uri.parse(item.url))
     }
     override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
         inflater.inflate(R.menu.search_menu, menu)
