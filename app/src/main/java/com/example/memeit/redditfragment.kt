@@ -107,7 +107,9 @@ class redditfragment : Fragment(), MyAdapter.theItemClicked {
                 GifProgressBar?.visibility = View.GONE
             },
             { error ->
-                Toast.makeText(context, "some error occurred", Toast.LENGTH_SHORT).show()
+                GifProgressBar?.visibility = View.GONE
+                val intent = Intent(context, errorActivity::class.java)
+                startActivity(intent)
             }
         )
         context?.let { MySingleton.getInstance(it).addToRequestQueue(jsonObjectRequest) }

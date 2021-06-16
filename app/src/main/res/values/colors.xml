@@ -8,4 +8,11 @@
     <color name="black">#FF000000</color>
     <color name="white">#FFFFFFFF</color>
     <color name="CustomColor">#9C27B0</color>
+    <color name="darkTheme">#080823</color>
+    <color name="cardColor">#35E6AE</color>
+    <color name="WhiteTheme">#61E3D1FF</color>
+    <color name="Primarycolor">#FE007A</color>
+    <color name="PrimaryVarient">#B300FF</color>
+    <color name="SecondaryVarient">#B00A5A</color>
+    <color name="OnPrimaryColor">#D8C3FF</color>
 </resources>

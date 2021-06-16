@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:showIn="navigation_view">
+    <group android:checkableBehavior="single">
+
+        <item
+            android:id="@+id/signOut"
+            android:title="SignOut" />
+        <item
+            android:id="@+id/changeAv"
+            android:title="ChangeAvtar" />
+        <item
+            android:id="@+id/account"
+            android:title="Account" />
+
+
+    <item android:title="THEMES">
+        <menu>
+            <item
+                android:id="@+id/ChangeTheTheme"
+                android:title="Dark" />
+            <item
+                android:id="@+id/ChangeTheme2"
+                android:title="Light"/>
+        </menu>
+    </item>
+    <item android:title="BEHIND THE SCENES">
+        <menu>
+            <item
+                android:id="@+id/share"
+                android:title="ShareUs" />
+            <item
+                android:id="@+id/rate"
+                android:title="RateUs" />
+            <item
+                android:id="@+id/credits"
+                android:title="Credits" />
+        </menu>
+    </item>
+    <item android:title="LEGAL">
+        <menu>
+            <item
+                android:id="@+id/Privacy"
+                android:title="PrivacyPolicy" />
+        </menu>
+    </item>
+    </group>
+</menu>

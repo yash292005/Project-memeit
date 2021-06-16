@@ -12,6 +12,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.android.volley.toolbox.JsonObjectRequest
 import kotlinx.android.synthetic.main.fragment_instafragment.*
+import kotlinx.android.synthetic.main.fragment_redditfragment.*
 
 class Instafragment : Fragment(), WallPaperAdapter.WallPaperClicked {
     private lateinit var mWallpaperAdapter: WallPaperAdapter
@@ -51,7 +52,9 @@ class Instafragment : Fragment(), WallPaperAdapter.WallPaperClicked {
                 wallpaperLoader?.visibility = View.GONE
             },
             {
-                Toast.makeText(context, "some error occured", Toast.LENGTH_SHORT).show()
+                wallpaperLoader?.visibility = View.GONE
+                val intent = Intent(context, errorActivity::class.java)
+                startActivity(intent)
             }
         ) {
             override fun getHeaders(): MutableMap<String, String> {

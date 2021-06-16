@@ -11,7 +11,7 @@
     <pl.droidsonroids.gif.GifImageView
         android:id="@+id/gifImageView"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_height="542dp"
         android:layout_marginEnd="411dp"
         android:layout_marginBottom="551dp"
         android:src="@drawable/another_good_progressbar"
@@ -22,21 +22,24 @@
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.29000002" />
 
+
     <TextView
+        android:id="@+id/textView"
         android:layout_width="404dp"
         android:layout_height="56dp"
         android:text="MEMEIT"
-        android:textSize="20dp"
         android:textAlignment="center"
         android:textColor="@color/white"
+        android:textSize="20dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.428"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/gifImageView"
-        app:layout_constraintVertical_bias="0.0" />
+        app:layout_constraintVertical_bias="0.061" />
 
     <TextView
+        android:id="@+id/textView2"
         android:layout_width="404dp"
         android:layout_height="56dp"
         android:text="LOADING..."
@@ -45,10 +48,10 @@
         android:textSize="20dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.428"
+        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/gifImageView"
-        app:layout_constraintVertical_bias="0.685" />
+        app:layout_constraintVertical_bias="0.986" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -12,9 +12,15 @@
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
         android:largeHeap="true"
+        android:noHistory="true"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
-        android:theme="@style/Theme.Memeit">
+        android:theme="@style/LightTheme">
+        <activity android:name=".errorActivity"></activity>
+        <activity
+            android:name=".ThemesActivity"
+            android:label="@string/title_activity_themes"
+            android:theme="@style/LightTheme.NoActionBar" />
         <activity android:name=".SplashScreenActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

@@ -5,22 +5,96 @@ package com.example.memeit
  * on date 26/4/2021
  */
 
-import androidx.appcompat.app.AppCompatActivity
+import android.annotation.SuppressLint
+import android.content.Intent
+import android.graphics.Color
+import android.hardware.camera2.params.BlackLevelPattern
 import android.os.Bundle
-import android.view.Menu
+import android.view.MenuItem
 import android.widget.Toast
-import androidx.appcompat.widget.SearchView
-import androidx.core.app.ActivityCompat
+import androidx.appcompat.app.ActionBarDrawerToggle
+import androidx.appcompat.app.AppCompatActivity
+import androidx.appcompat.app.AppCompatDelegate
+import androidx.core.view.GravityCompat
+import androidx.drawerlayout.widget.DrawerLayout
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
 import androidx.fragment.app.FragmentPagerAdapter
+import com.google.android.material.navigation.NavigationView
 import kotlinx.android.synthetic.main.activity_main.*
+import kotlinx.android.synthetic.main.reddit_meme_content.*
+import java.util.jar.Manifest
+
 
 class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
+        setTheme(R.style.DarkTheme)
         mainPager.adapter = someAdapter(supportFragmentManager)
+        setSupportActionBar(MainToolBar)
+        supportActionBar?.setDisplayShowTitleEnabled(true)
+        collapse.isTitleEnabled = false
+        MainToolBar.title = "memeit"
+
+        val drawerLayout = findViewById<DrawerLayout>(R.id.my_drawer_layout)
+        val toggle: ActionBarDrawerToggle = ActionBarDrawerToggle(this, drawerLayout,MainToolBar, R.string.nav_open, R.string.nav_close)
+        drawerLayout.addDrawerListener(toggle)
+        toggle.syncState()
+        val navView = findViewById<NavigationView>(R.id.NavView)
+        navView.setNavigationItemSelectedListener(object :
+            NavigationView.OnNavigationItemSelectedListener {
+            override fun onNavigationItemSelected(item: MenuItem): Boolean {
+                when (item.itemId) {
+                    R.id.signOut -> {
+                        Toast.makeText(this@MainActivity, "Feature has not been implemented yet", Toast.LENGTH_SHORT).show()
+                        return true
+                    }
+                    R.id.changeAv -> {
+                        Toast.makeText(this@MainActivity, "Feature has not been implemented yet", Toast.LENGTH_SHORT).show()
+                        return true
+                    }
+                    R.id.account -> {
+                        Toast.makeText(this@MainActivity, "Feature has not been implemented yet", Toast.LENGTH_SHORT).show()
+                        return true
+                    }
+
+                    R.id.ChangeTheTheme -> {
+                       val theme = AppCompatDelegate.MODE_NIGHT_YES
+                        AppCompatDelegate.setDefaultNightMode(theme)
+                        mainPager.setBackgroundColor(Color.argb(100, 8,8,35))
+                        return true
+                    }R.id.ChangeTheme2 ->{
+                    val theme2 = AppCompatDelegate.MODE_NIGHT_NO
+                    AppCompatDelegate.setDefaultNightMode(theme2)
+                    mainPager.setBackgroundColor(Color.argb(100, 225,225,225))
+                    }
+                    R.id.share -> {
+                        Toast.makeText(this@MainActivity, "Feature has not been implemented yet", Toast.LENGTH_SHORT).show()
+                        return true
+                    }
+                    R.id.rate -> {
+                        Toast.makeText(this@MainActivity, "Feature has not been implemented yet", Toast.LENGTH_SHORT).show()
+                        return true
+                    }
+                    R.id.credits -> {
+                        Toast.makeText(this@MainActivity, "Feature has not been implemented yet", Toast.LENGTH_SHORT).show()
+                        return true
+                    }
+                    R.id.Privacy -> {
+                        Toast.makeText(this@MainActivity, "Feature has not been implemented yet", Toast.LENGTH_SHORT).show()
+                        return true
+                    }
+                }
+                my_drawer_layout.closeDrawer(GravityCompat.START)
+                return true
+            }
+
+        })
+        supportActionBar?.setDisplayHomeAsUpEnabled(true)
+        supportActionBar?.setHomeButtonEnabled(true)
+        supportActionBar?.setHomeAsUpIndicator(R.drawable.ic_menu_main)
+        supportActionBar?.title = "memeit"
         tabLayout.setupWithViewPager(mainPager)
         tabLayout.getTabAt(0)?.setIcon(R.drawable.ic_memepng)
         tabLayout.getTabAt(1)?.setIcon(R.drawable.ic_gif)
@@ -29,10 +103,11 @@ class MainActivity : AppCompatActivity() {
 
     }
 
+    override fun onBackPressed() {
+        finish()
+    }
 
-//    override fun fetchData(memes: String) {
-//        fetchData("hii")
-//    }
+
 }
 
 class someAdapter(fm: FragmentManager) : FragmentPagerAdapter(fm) {
@@ -49,7 +124,5 @@ class someAdapter(fm: FragmentManager) : FragmentPagerAdapter(fm) {
     override fun getCount(): Int {
         return 4
     }
-
-
 
 }
