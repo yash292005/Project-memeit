@@ -5,10 +5,7 @@ package com.example.memeit
  * on date 26/4/2021
  */
 
-import android.annotation.SuppressLint
-import android.content.Intent
 import android.graphics.Color
-import android.hardware.camera2.params.BlackLevelPattern
 import android.os.Bundle
 import android.view.MenuItem
 import android.widget.Toast
@@ -20,10 +17,12 @@ import androidx.drawerlayout.widget.DrawerLayout
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
 import androidx.fragment.app.FragmentPagerAdapter
+import com.google.android.gms.ads.AdRequest
+import com.google.android.gms.ads.MobileAds
+import com.google.android.gms.ads.interstitial.InterstitialAd
 import com.google.android.material.navigation.NavigationView
 import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.reddit_meme_content.*
-import java.util.jar.Manifest
 
 
 class MainActivity : AppCompatActivity() {
@@ -31,12 +30,15 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
         setTheme(R.style.DarkTheme)
-        mainPager.adapter = someAdapter(supportFragmentManager)
+        var mInterstitialAd: InterstitialAd
+        var adRequest = AdRequest.Builder().build()
+
+
+            mainPager.adapter = someAdapter(supportFragmentManager)
         setSupportActionBar(MainToolBar)
         supportActionBar?.setDisplayShowTitleEnabled(true)
         collapse.isTitleEnabled = false
         MainToolBar.title = "memeit"
-
         val drawerLayout = findViewById<DrawerLayout>(R.id.my_drawer_layout)
         val toggle: ActionBarDrawerToggle = ActionBarDrawerToggle(this, drawerLayout,MainToolBar, R.string.nav_open, R.string.nav_close)
         drawerLayout.addDrawerListener(toggle)
@@ -62,12 +64,13 @@ class MainActivity : AppCompatActivity() {
                     R.id.ChangeTheTheme -> {
                        val theme = AppCompatDelegate.MODE_NIGHT_YES
                         AppCompatDelegate.setDefaultNightMode(theme)
-                        mainPager.setBackgroundColor(Color.argb(100, 8,8,35))
+                        mainPager.setBackgroundColor(Color.rgb(51, 15, 66))
                         return true
                     }R.id.ChangeTheme2 ->{
                     val theme2 = AppCompatDelegate.MODE_NIGHT_NO
                     AppCompatDelegate.setDefaultNightMode(theme2)
-                    mainPager.setBackgroundColor(Color.argb(100, 225,225,225))
+                    mainPager.setBackgroundColor(Color.rgb(185, 250, 248))
+                    return true
                     }
                     R.id.share -> {
                         Toast.makeText(this@MainActivity, "Feature has not been implemented yet", Toast.LENGTH_SHORT).show()

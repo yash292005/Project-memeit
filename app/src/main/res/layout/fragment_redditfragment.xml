@@ -9,14 +9,26 @@
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/MemeView"
+        android:layout_marginTop="50dp"
         android:layout_width="match_parent"
         android:layout_height="match_parent" />
 
-    <pl.droidsonroids.gif.GifImageView
-        android:layout_width="wrap_content"
+    <com.google.android.gms.ads.AdView
+        android:id="@+id/adView"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:src="@drawable/unnamed"
-        android:id="@+id/GifProgressBar"/>
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true"
+        app:adSize="BANNER"
+        app:adUnitId="ca-app-pub-3940256099942544/6300978111" />
+    <pl.droidsonroids.gif.GifImageView
+        android:id="@+id/GifProgressBar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:src="@drawable/unnamed" />
+
+
+
 
 
 </androidx.coordinatorlayout.widget.CoordinatorLayout>
