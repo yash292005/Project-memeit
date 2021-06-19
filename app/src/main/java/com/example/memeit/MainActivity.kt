@@ -5,8 +5,10 @@ package com.example.memeit
  * on date 26/4/2021
  */
 
+import android.app.Activity
 import android.graphics.Color
 import android.os.Bundle
+import android.support.v4.media.RatingCompat
 import android.view.MenuItem
 import android.widget.Toast
 import androidx.appcompat.app.ActionBarDrawerToggle
@@ -29,7 +31,6 @@ class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
-        setTheme(R.style.DarkTheme)
         var mInterstitialAd: InterstitialAd
         var adRequest = AdRequest.Builder().build()
 
@@ -64,7 +65,7 @@ class MainActivity : AppCompatActivity() {
                     R.id.ChangeTheTheme -> {
                        val theme = AppCompatDelegate.MODE_NIGHT_YES
                         AppCompatDelegate.setDefaultNightMode(theme)
-                        mainPager.setBackgroundColor(Color.rgb(51, 15, 66))
+                        mainPager.setBackgroundColor(Color.rgb(8, 8, 53))
                         return true
                     }R.id.ChangeTheme2 ->{
                     val theme2 = AppCompatDelegate.MODE_NIGHT_NO

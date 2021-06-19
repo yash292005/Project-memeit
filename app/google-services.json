@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "540929065009",
+    "project_id": "memeit-9d49b",
+    "storage_bucket": "memeit-9d49b.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:540929065009:android:fd35396cd3fe378742d510",
+        "android_client_info": {
+          "package_name": "com.example.memeit"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "540929065009-n8qj4gthnaj281dgbc3n7vbg0b6gvl8f.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAQ3YGJ6bb-C2t_25BvKbnwU2SCgl6y050"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "540929065009-n8qj4gthnaj281dgbc3n7vbg0b6gvl8f.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

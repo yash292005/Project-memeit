@@ -15,4 +15,7 @@
     <color name="PrimaryVarient">#B300FF</color>
     <color name="SecondaryVarient">#B00A5A</color>
     <color name="OnPrimaryColor">#D8C3FF</color>
+    <color name="MainColorDark">#1D0248</color>
+    <color name="MainColorWhite">#EDF2F5</color>
+    <color name="CardColorLight">#00ADED</color>
 </resources>

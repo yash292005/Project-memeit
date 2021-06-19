@@ -1,26 +1,28 @@
 package com.example.memeit
 
+import android.content.Context
 import android.content.Intent
 import android.os.Bundle
 import android.view.*
+import android.view.inputmethod.InputMethodManager
 import android.widget.Toast
 import androidx.appcompat.widget.SearchView
 import androidx.fragment.app.Fragment
+import com.giphy.sdk.analytics.GiphyPingbacks
 import com.giphy.sdk.core.models.Media
 import com.giphy.sdk.core.models.enums.MediaType
 import com.giphy.sdk.ui.Giphy
 import com.giphy.sdk.ui.pagination.GPHContent
 import com.giphy.sdk.ui.views.GPHGridCallback
 import com.giphy.sdk.ui.views.GiphyGridView
-import com.google.android.gms.ads.AdRequest
-import com.google.android.gms.ads.AdSize
-import com.google.android.gms.ads.AdView
-import com.google.android.gms.ads.MobileAds
+import com.google.android.gms.ads.*
+import com.google.android.gms.ads.interstitial.InterstitialAd
 import kotlinx.android.synthetic.main.fragment_f_b_.*
 import timber.log.Timber
 
 class FB_Fragment : Fragment() {
-    lateinit var mAdView : AdView
+    private lateinit var mAdView : AdView
+    private var mInterstitialAd: InterstitialAd? = null
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
@@ -39,6 +41,12 @@ class FB_Fragment : Fragment() {
         mAdView = view.findViewById(R.id.adView4)
         val adRequest = AdRequest.Builder().build()
         mAdView.loadAd(adRequest)
+        mAdView.adListener = object : AdListener(){
+
+            override fun onAdFailedToLoad(adError : LoadAdError) {
+                mAdView.loadAd(adRequest)
+            }
+        }
         return view
     }
 
@@ -62,6 +70,10 @@ class FB_Fragment : Fragment() {
             }
 
         }
+    }
+    fun dismissKeyboard(context: Context?) {
+        val imm = context?.getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
+        imm.hideSoftInputFromWindow(view?.windowToken, 0)
     }
     private fun setTrendingQuery(): GiphyGridView?{
         val gridView = context?.let { GiphyGridView(it) }
@@ -90,7 +102,7 @@ class FB_Fragment : Fragment() {
             override fun onQueryTextSubmit(query: String?): Boolean {
                 if (query != null) {
                     searchGifs(query)
-                    Toast.makeText(context, "Searching for $query", Toast.LENGTH_SHORT).show()
+                    dismissKeyboard(context)
                 }else{
                     setTrendingQuery()
                 }

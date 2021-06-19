@@ -3,12 +3,14 @@ package com.example.memeit
 import android.Manifest
 import android.app.Activity
 import android.app.DownloadManager
+import android.app.ProgressDialog.show
 import android.content.Context
 import android.content.Intent
 import android.content.pm.PackageManager
 import android.net.Uri
 import android.os.Bundle
 import android.os.Environment
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -18,14 +20,26 @@ import android.widget.Toast
 import androidx.browser.customtabs.CustomTabsIntent
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
+import androidx.core.content.contentValuesOf
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.giphy.sdk.analytics.GiphyPingbacks
+import com.giphy.sdk.analytics.GiphyPingbacks.context
+import com.google.android.gms.ads.AdRequest
+import com.google.android.gms.ads.LoadAdError
+import com.google.android.gms.ads.MobileAds
+import com.google.android.gms.ads.interstitial.InterstitialAd
+import com.google.android.gms.ads.interstitial.InterstitialAdLoadCallback
 import java.io.File
+import java.security.AccessController.getContext
 
-class MyAdapter(private val Listener: redditfragment) :
+class MyAdapter(private val Listener: theItemClicked) :
     RecyclerView.Adapter<MyAdapter.ViewHolder>() {
+    var clickCount = 0
+
     private val dataSet: ArrayList<Memes> = ArrayList()
+    private var mInterstitialAd: InterstitialAd? = null
+
 
     inner class ViewHolder(view: View) : RecyclerView.ViewHolder(view) {
         val memeTitle: TextView = itemView.findViewById(R.id.MemeName)
@@ -37,12 +51,13 @@ class MyAdapter(private val Listener: redditfragment) :
         init {
             ShareListener.setOnClickListener {
                 val currentItems = dataSet[adapterPosition]
+                val currentImageItems = dataSet[adapterPosition]
                 val i = Intent(Intent.ACTION_SEND)
                 i.type = "text/plain"
-                i.putExtra(Intent.EXTRA_TEXT, "Hi, checkout this meme ${currentItems.url}")
+                i.putExtra(Intent.EXTRA_TEXT, "Hi, checkout this WallPaper ${currentImageItems.url}")
                 ContextCompat.startActivity(
-                    GiphyPingbacks.context,
-                    Intent.createChooser(i, "share this meme with"),
+                    it.context,
+                    Intent.createChooser(i, "share this WallPaper with"),
                     Bundle()
                 )
 
@@ -50,21 +65,23 @@ class MyAdapter(private val Listener: redditfragment) :
 
             DownloadListener.setOnClickListener {
                 if (ContextCompat.checkSelfPermission(
-                        GiphyPingbacks.context,
+                        context,
                         Manifest.permission.WRITE_EXTERNAL_STORAGE
                     ) != (PackageManager.PERMISSION_GRANTED) && ContextCompat.checkSelfPermission(
-                        GiphyPingbacks.context,
+                        context,
                         Manifest.permission.WRITE_EXTERNAL_STORAGE
                     ) != PackageManager.PERMISSION_GRANTED
                 ) {
                     ActivityCompat.requestPermissions(
-                        GiphyPingbacks.context as Activity,
-                        arrayOf(Manifest.permission.READ_EXTERNAL_STORAGE),
+                        it.context as Activity,
+                        arrayOf(Manifest.permission.READ_EXTERNAL_STORAGE, Manifest.permission.WRITE_EXTERNAL_STORAGE),
                         123
                     )
+                    val currentItems = dataSet[adapterPosition]
+                    downloadImage("${System.currentTimeMillis()}", currentItems.url)
                 }
                 val currentItems = dataSet[adapterPosition]
-                downloadImage("Memeit Image", currentItems.url)
+                downloadImage("${System.currentTimeMillis()}", currentItems.url)
 
 
             }
@@ -72,7 +89,7 @@ class MyAdapter(private val Listener: redditfragment) :
                 val builder = CustomTabsIntent.Builder()
                 val CustomTabsIntent = builder.build()
                 CustomTabsIntent.launchUrl(
-                    GiphyPingbacks.context,
+                    it.context,
                     Uri.parse("https://www.reddit.com/")
                 )
             }
@@ -83,7 +100,7 @@ class MyAdapter(private val Listener: redditfragment) :
         private fun downloadImage(filename: String, downloadUrlOfImage: String) {
             try {
                 val dm: DownloadManager =
-                    GiphyPingbacks.context.getSystemService(Context.DOWNLOAD_SERVICE) as DownloadManager
+                    context.getSystemService(Context.DOWNLOAD_SERVICE) as DownloadManager
                 val downloadUri = Uri.parse(downloadUrlOfImage)
                 val request = DownloadManager.Request(downloadUri)
                 request.setAllowedNetworkTypes(DownloadManager.Request.NETWORK_WIFI or DownloadManager.Request.NETWORK_MOBILE)
@@ -97,13 +114,13 @@ class MyAdapter(private val Listener: redditfragment) :
                     )
                 dm.enqueue(request)
                 Toast.makeText(
-                    GiphyPingbacks.context,
+                    context,
                     "Image download started.",
                     Toast.LENGTH_SHORT
                 ).show()
             } catch (e: Exception) {
                 e.printStackTrace()
-                Toast.makeText(GiphyPingbacks.context, "Some Error Occured", Toast.LENGTH_SHORT)
+                Toast.makeText(context, "Some Error Occured", Toast.LENGTH_SHORT)
                     .show()
             }
 

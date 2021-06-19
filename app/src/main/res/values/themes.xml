@@ -9,7 +9,7 @@
         <item name="colorSecondary">#FFFFFF</item>
         <item name="colorSecondaryVariant">@color/Primarycolor</item>
         <!-- Status bar color. -->
-        <item name="android:statusBarColor" tools:targetApi="l">#B00A5A</item>
+        <item name="android:statusBarColor" tools:targetApi="l">#C60087</item>
         <!-- Customize your theme here. -->
     </style>
 
@@ -18,9 +18,8 @@
         <item name="windowNoTitle">true</item>
     </style>
 
-    <style name="Theme.Memeit.AppBarOverlay" parent="ThemeOverlay.AppCompat.Dark.ActionBar" />
+    <style name="Theme.Memeit.AppBarOverlay" parent="ThemeOverlay.AppCompat.Dark.ActionBar"/>
 
-    <style name="Theme.Memeit.PopupOverlay" parent="ThemeOverlay.AppCompat.Light" />
 
     <style name="LightTheme.AppBarOverlay" parent="ThemeOverlay.AppCompat.Dark.ActionBar" />
 

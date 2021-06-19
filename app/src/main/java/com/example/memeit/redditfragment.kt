@@ -1,13 +1,14 @@
 package com.example.memeit
 
 
-import android.app.Activity
+
 import android.content.Context
+import android.content.Context.INPUT_METHOD_SERVICE
 import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
-import android.util.Log
 import android.view.*
+import android.view.inputmethod.InputMethodManager
 import android.widget.Toast
 import androidx.appcompat.widget.SearchView
 import androidx.browser.customtabs.CustomTabsIntent
@@ -20,17 +21,12 @@ import com.android.volley.Request
 import com.android.volley.ServerError
 import com.android.volley.toolbox.JsonObjectRequest
 import com.google.android.gms.ads.*
-import com.google.android.gms.ads.interstitial.InterstitialAd
-import com.google.android.gms.ads.interstitial.InterstitialAdLoadCallback
 import kotlinx.android.synthetic.main.fragment_redditfragment.*
-import timber.log.Timber
-import kotlin.collections.ArrayList
 
 
 class redditfragment : Fragment(), MyAdapter.theItemClicked {
     private lateinit var mAdapter: MyAdapter
-    private var mInterstitialAd: InterstitialAd? = null
-    lateinit var mAdView : AdView
+    private lateinit var mAdView : AdView
 //    private final var TAG = "redditfragment"
 
     override fun onCreateView(
@@ -42,7 +38,7 @@ class redditfragment : Fragment(), MyAdapter.theItemClicked {
         val manager = LinearLayoutManager(requireContext())
         val rootView = inflater.inflate(R.layout.fragment_redditfragment, container, false)
         val recyclerView = rootView.findViewById<RecyclerView>(R.id.MemeView)
-        var adRequest = AdRequest.Builder().build()
+        val adRequest = AdRequest.Builder().build()
         recyclerView?.setHasFixedSize(true)
         recyclerView?.layoutManager = manager
         fetchData("dankmemes")
@@ -52,9 +48,14 @@ class redditfragment : Fragment(), MyAdapter.theItemClicked {
         val adView = AdView(context)
         adView.adSize = AdSize.BANNER
         adView.adUnitId = "ca-app-pub-3940256099942544/6300978111"
-        mAdView = rootView.findViewById<AdView>(R.id.adView)
-        mAdView.loadAd(adRequest
-        )
+        mAdView = rootView.findViewById(R.id.adView)
+        mAdView.loadAd(adRequest)
+        mAdView.adListener = object : AdListener(){
+
+            override fun onAdFailedToLoad(adError : LoadAdError) {
+                mAdView.loadAd(adRequest)
+            }
+        }
         return rootView
 
     }
@@ -74,7 +75,9 @@ class redditfragment : Fragment(), MyAdapter.theItemClicked {
             override fun onQueryTextSubmit(query: String?): Boolean {
                 if (query != null) {
                     fetchData(query)
+
                     Toast.makeText(context, "this is working", Toast.LENGTH_SHORT).show()
+                    dismissKeyboard(context)
                 }
                 return true
             }
@@ -86,7 +89,10 @@ class redditfragment : Fragment(), MyAdapter.theItemClicked {
         })
         super.onCreateOptionsMenu(menu, inflater)
     }
-
+    fun dismissKeyboard(context: Context?) {
+        val imm = context?.getSystemService(INPUT_METHOD_SERVICE) as InputMethodManager
+        imm.hideSoftInputFromWindow(view?.windowToken, 0)
+    }
 
     private fun fetchData(Memes: String) {
 
@@ -128,6 +134,7 @@ class redditfragment : Fragment(), MyAdapter.theItemClicked {
 
 
     }
+
 
 }
 

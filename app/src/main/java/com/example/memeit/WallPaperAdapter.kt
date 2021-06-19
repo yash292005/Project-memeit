@@ -23,6 +23,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.giphy.sdk.analytics.GiphyPingbacks
 import java.io.File
+import java.sql.Time
 
 class WallPaperAdapter(private val Listener: WallPaperClicked):RecyclerView.Adapter<WallPaperAdapter.ViewHolder>() {
     private val WallpaperSet: ArrayList<WallPaper> = ArrayList()
@@ -51,12 +52,14 @@ class WallPaperAdapter(private val Listener: WallPaperClicked):RecyclerView.Adap
                 ) {
                     ActivityCompat.requestPermissions(
                         it.context as Activity,
-                        arrayOf(Manifest.permission.READ_EXTERNAL_STORAGE),
+                        arrayOf(Manifest.permission.READ_EXTERNAL_STORAGE, Manifest.permission.WRITE_EXTERNAL_STORAGE),
                         123
                     )
+                    val currentImageItems = WallpaperSet[adapterPosition]
+                    downloadImage("${System.currentTimeMillis()}", currentImageItems.url)
                 }
                 val currentImageItems = WallpaperSet[adapterPosition]
-                downloadImage("Memeit Image", currentImageItems.url)
+                downloadImage("${System.currentTimeMillis()}", currentImageItems.url)
             }
             ArtistName.setOnClickListener {
                 val builder = CustomTabsIntent.Builder()
