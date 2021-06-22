@@ -14,6 +14,14 @@
       },
       "oauth_client": [
         {
+          "client_id": "540929065009-1jkbe5glrtojtn6aa8ebpquksvqt2o8k.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.memeit",
+            "certificate_hash": "6bd37904411834e08211da34e8810a3e1589e78e"
+          }
+        },
+        {
           "client_id": "540929065009-n8qj4gthnaj281dgbc3n7vbg0b6gvl8f.apps.googleusercontent.com",
           "client_type": 3
         }

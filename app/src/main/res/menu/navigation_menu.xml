@@ -10,9 +10,7 @@
         <item
             android:id="@+id/changeAv"
             android:title="ChangeAvtar" />
-        <item
-            android:id="@+id/account"
-            android:title="Account" />
+
 
 
     <item android:title="THEMES">

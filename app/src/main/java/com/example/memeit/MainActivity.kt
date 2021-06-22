@@ -6,7 +6,9 @@ package com.example.memeit
  */
 
 import android.app.Activity
+import android.content.Intent
 import android.graphics.Color
+import android.net.Uri
 import android.os.Bundle
 import android.support.v4.media.RatingCompat
 import android.view.MenuItem
@@ -14,6 +16,7 @@ import android.widget.Toast
 import androidx.appcompat.app.ActionBarDrawerToggle
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.app.AppCompatDelegate
+import androidx.browser.customtabs.CustomTabsIntent
 import androidx.core.view.GravityCompat
 import androidx.drawerlayout.widget.DrawerLayout
 import androidx.fragment.app.Fragment
@@ -23,6 +26,7 @@ import com.google.android.gms.ads.AdRequest
 import com.google.android.gms.ads.MobileAds
 import com.google.android.gms.ads.interstitial.InterstitialAd
 import com.google.android.material.navigation.NavigationView
+import com.google.firebase.auth.FirebaseAuth
 import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.reddit_meme_content.*
 
@@ -33,9 +37,7 @@ class MainActivity : AppCompatActivity() {
         setContentView(R.layout.activity_main)
         var mInterstitialAd: InterstitialAd
         var adRequest = AdRequest.Builder().build()
-
-
-            mainPager.adapter = someAdapter(supportFragmentManager)
+        mainPager.adapter = someAdapter(supportFragmentManager)
         setSupportActionBar(MainToolBar)
         supportActionBar?.setDisplayShowTitleEnabled(true)
         collapse.isTitleEnabled = false
@@ -44,23 +46,38 @@ class MainActivity : AppCompatActivity() {
         val toggle: ActionBarDrawerToggle = ActionBarDrawerToggle(this, drawerLayout,MainToolBar, R.string.nav_open, R.string.nav_close)
         drawerLayout.addDrawerListener(toggle)
         toggle.syncState()
+        val intent: Intent = intent
+        val UserImage: String? = intent.getStringExtra("User input")
+        when (UserImage){
+            "Susan" -> UserAvatar?.setImageResource(R.drawable.girl)
+            "Mark" -> UserAvatar?.setImageResource(R.drawable.boy)
+            "Elon" -> UserAvatar?.setImageResource(R.drawable.boy_1_)
+            "Lisa" -> UserAvatar?.setImageResource(R.drawable.girl_1_)
+            "Warren" -> UserAvatar?.setImageResource(R.drawable.man)
+            "Sundar" -> UserAvatar?.setImageResource(R.drawable.man_1_)
+            "Bill" -> UserAvatar?.setImageResource(R.drawable.man_2_)
+            "Shantanu" -> UserAvatar?.setImageResource(R.drawable.man_3_)
+            "Yash" -> UserAvatar?.setImageResource(R.drawable.man_4_)
+        }
         val navView = findViewById<NavigationView>(R.id.NavView)
         navView.setNavigationItemSelectedListener(object :
             NavigationView.OnNavigationItemSelectedListener {
             override fun onNavigationItemSelected(item: MenuItem): Boolean {
                 when (item.itemId) {
                     R.id.signOut -> {
-                        Toast.makeText(this@MainActivity, "Feature has not been implemented yet", Toast.LENGTH_SHORT).show()
+                        FirebaseAuth.getInstance().signOut()
+                        val intent = Intent(this@MainActivity, SignInActivity::class.java)
+                        startActivity(intent)
+                        finish()
                         return true
                     }
                     R.id.changeAv -> {
-                        Toast.makeText(this@MainActivity, "Feature has not been implemented yet", Toast.LENGTH_SHORT).show()
+                        val intent = Intent(this@MainActivity, AvatarActivity::class.java)
+                        startActivity(intent)
+                        finish()
                         return true
                     }
-                    R.id.account -> {
-                        Toast.makeText(this@MainActivity, "Feature has not been implemented yet", Toast.LENGTH_SHORT).show()
-                        return true
-                    }
+
 
                     R.id.ChangeTheTheme -> {
                        val theme = AppCompatDelegate.MODE_NIGHT_YES
@@ -74,19 +91,22 @@ class MainActivity : AppCompatActivity() {
                     return true
                     }
                     R.id.share -> {
-                        Toast.makeText(this@MainActivity, "Feature has not been implemented yet", Toast.LENGTH_SHORT).show()
+                        Toast.makeText(this@MainActivity, "Sorry The App Has Not Been Deployed To PlayStore Yet", Toast.LENGTH_SHORT).show()
                         return true
                     }
                     R.id.rate -> {
-                        Toast.makeText(this@MainActivity, "Feature has not been implemented yet", Toast.LENGTH_SHORT).show()
+                        Toast.makeText(this@MainActivity, "Sorry The App Has Not Been Deployed To PlayStore Yet", Toast.LENGTH_SHORT).show()
                         return true
                     }
                     R.id.credits -> {
-                        Toast.makeText(this@MainActivity, "Feature has not been implemented yet", Toast.LENGTH_SHORT).show()
+                        val builder = CustomTabsIntent.Builder()
+                        val CustomTabsIntent = builder.build()
+                        CustomTabsIntent.launchUrl(this@MainActivity, Uri.parse("https://memeitcredits.blogspot.com/2021/06/memeit-app-is-created-by-indian-amateur.html"))
                         return true
                     }
                     R.id.Privacy -> {
-                        Toast.makeText(this@MainActivity, "Feature has not been implemented yet", Toast.LENGTH_SHORT).show()
+                        val intent = Intent(this@MainActivity, PrivacyPolicy::class.java)
+                        startActivity(intent)
                         return true
                     }
                 }

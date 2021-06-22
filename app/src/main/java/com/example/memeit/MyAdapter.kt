@@ -35,10 +35,8 @@ import java.security.AccessController.getContext
 
 class MyAdapter(private val Listener: theItemClicked) :
     RecyclerView.Adapter<MyAdapter.ViewHolder>() {
-    var clickCount = 0
 
     private val dataSet: ArrayList<Memes> = ArrayList()
-    private var mInterstitialAd: InterstitialAd? = null
 
 
     inner class ViewHolder(view: View) : RecyclerView.ViewHolder(view) {
