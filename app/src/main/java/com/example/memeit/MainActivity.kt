@@ -5,12 +5,11 @@ package com.example.memeit
  * on date 26/4/2021
  */
 
-import android.app.Activity
+import android.content.Context
 import android.content.Intent
 import android.graphics.Color
 import android.net.Uri
 import android.os.Bundle
-import android.support.v4.media.RatingCompat
 import android.view.MenuItem
 import android.widget.Toast
 import androidx.appcompat.app.ActionBarDrawerToggle
@@ -23,8 +22,6 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
 import androidx.fragment.app.FragmentPagerAdapter
 import com.google.android.gms.ads.AdRequest
-import com.google.android.gms.ads.MobileAds
-import com.google.android.gms.ads.interstitial.InterstitialAd
 import com.google.android.material.navigation.NavigationView
 import com.google.firebase.auth.FirebaseAuth
 import kotlinx.android.synthetic.main.activity_main.*
@@ -35,7 +32,6 @@ class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
-        var mInterstitialAd: InterstitialAd
         var adRequest = AdRequest.Builder().build()
         mainPager.adapter = someAdapter(supportFragmentManager)
         setSupportActionBar(MainToolBar)
@@ -46,8 +42,9 @@ class MainActivity : AppCompatActivity() {
         val toggle: ActionBarDrawerToggle = ActionBarDrawerToggle(this, drawerLayout,MainToolBar, R.string.nav_open, R.string.nav_close)
         drawerLayout.addDrawerListener(toggle)
         toggle.syncState()
-        val intent: Intent = intent
-        val UserImage: String? = intent.getStringExtra("User input")
+        val sharedPreferences = getSharedPreferences("UserInput", MODE_PRIVATE)
+        val key = "text"
+        val UserImage = sharedPreferences.getString(key, "")
         when (UserImage){
             "Susan" -> UserAvatar?.setImageResource(R.drawable.girl)
             "Mark" -> UserAvatar?.setImageResource(R.drawable.boy)
@@ -65,6 +62,9 @@ class MainActivity : AppCompatActivity() {
             override fun onNavigationItemSelected(item: MenuItem): Boolean {
                 when (item.itemId) {
                     R.id.signOut -> {
+                        val sharedPref = this@MainActivity.getSharedPreferences("UserInput", Context.MODE_PRIVATE)
+                        val editor = sharedPref.edit()
+                        editor.clear()
                         FirebaseAuth.getInstance().signOut()
                         val intent = Intent(this@MainActivity, SignInActivity::class.java)
                         startActivity(intent)

@@ -1,5 +1,7 @@
 package com.example.memeit
 
+import android.annotation.SuppressLint
+import android.content.Context
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
@@ -34,14 +36,20 @@ class AvatarActivity : AppCompatActivity(){
 
         override fun getLayout() = R.layout.avatar_item
 
+        @SuppressLint("CommitPrefEdits")
         override fun bind(viewHolder: ViewHolder, position: Int) {
             viewHolder.itemView.AvatarName.text = name
             viewHolder.itemView.AvatarImage.load(image)
             viewHolder.itemView.AvatarImage.setOnClickListener {
-                Toast.makeText(context, "Avatar set to  $name", Toast.LENGTH_SHORT).show()
+                val sharedPref = it.context.getSharedPreferences("UserInput", Context.MODE_PRIVATE)
+                val editor = sharedPref.edit()
+                editor.clear()
+                val key = "text"
+                editor.putString(key, name)
+                editor.apply()
+                Toast.makeText(context, "Avatar set to $name", Toast.LENGTH_SHORT).show()
                 val intent = Intent(context, MainActivity::class.java)
                 intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK
-                intent.putExtra("User input", "$name")
                 startActivity(context, intent, Bundle())
             }
         }
