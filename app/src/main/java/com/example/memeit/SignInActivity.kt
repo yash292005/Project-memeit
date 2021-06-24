@@ -1,20 +1,11 @@
 package com.example.memeit
 
-import android.content.Context
 import android.content.Intent
 import android.os.Bundle
 import android.util.Log
 import android.view.View
-import android.widget.TextView
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
-import com.facebook.CallbackManager
-import com.facebook.FacebookCallback
-import com.facebook.FacebookException
-import com.facebook.FacebookSdk
-import com.facebook.login.LoginManager
-import com.facebook.login.LoginResult
-import com.facebook.login.widget.LoginButton
 import com.giphy.sdk.analytics.GiphyPingbacks.context
 import com.google.android.gms.auth.api.signin.GoogleSignIn
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount
@@ -82,7 +73,7 @@ class SignInActivity : AppCompatActivity() {
     private fun handleSignInResult(completedTask: Task<GoogleSignInAccount>?) {
         try {
             val account = completedTask?.getResult(ApiException::class.java)!!
-            val intent = Intent(this, AvatarActivity::class.java)
+            val intent = Intent(this, MainActivity::class.java)
             startActivity(intent)
             finish()
             Log.d(TAG, "firebaseAuthWithGoogle:" + account.id)
@@ -110,7 +101,6 @@ class SignInActivity : AppCompatActivity() {
 
     private fun updateUI(firebaseUser: FirebaseUser?) {
         if(firebaseUser != null) {
-
             val mainActivityIntent = Intent(this, SplashScreenActivity::class.java)
             startActivity(mainActivityIntent)
             finish()

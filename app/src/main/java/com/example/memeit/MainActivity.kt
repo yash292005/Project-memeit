@@ -42,6 +42,11 @@ class MainActivity : AppCompatActivity() {
         val toggle: ActionBarDrawerToggle = ActionBarDrawerToggle(this, drawerLayout,MainToolBar, R.string.nav_open, R.string.nav_close)
         drawerLayout.addDrawerListener(toggle)
         toggle.syncState()
+        UserAvatar?.setOnClickListener{
+            val mainActivityIntent = Intent(this, AvatarActivity::class.java)
+            startActivity(mainActivityIntent)
+            finish()
+        }
         val sharedPreferences = getSharedPreferences("UserInput", MODE_PRIVATE)
         val key = "text"
         val UserImage = sharedPreferences.getString(key, "")

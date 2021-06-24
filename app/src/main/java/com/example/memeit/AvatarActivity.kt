@@ -7,6 +7,7 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.widget.Toast
 import androidx.core.content.ContextCompat.startActivity
+import androidx.recyclerview.widget.RecyclerView
 import coil.load
 import com.giphy.sdk.analytics.GiphyPingbacks.context
 import com.xwray.groupie.GroupAdapter
@@ -21,7 +22,8 @@ class AvatarActivity : AppCompatActivity(){
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_avatar)
         val adapter = GroupAdapter<ViewHolder>()
-        AvatarView.adapter = adapter
+        val avatarView = findViewById<RecyclerView>(R.id.AvatarView)
+        avatarView.adapter = adapter
         adapter.add(AvtarItem("Susan", R.drawable.girl))
         adapter.add(AvtarItem("Mark", R.drawable.boy))
         adapter.add(AvtarItem("Elon", R.drawable.boy_1_))
