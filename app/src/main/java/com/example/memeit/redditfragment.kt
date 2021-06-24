@@ -96,7 +96,7 @@ class redditfragment : Fragment(), MyAdapter.theItemClicked {
 
     private fun fetchData(Memes: String) {
 
-        val urll = "https://meme-api.herokuapp.com/gimme/$Memes/50"
+        val urll = "https://memeit-meme-api.herokuapp.com/$Memes"
         GifProgressBar?.visibility = View.VISIBLE
         val jsonObjectRequest = JsonObjectRequest(Request.Method.GET, urll, null,
             { response ->
