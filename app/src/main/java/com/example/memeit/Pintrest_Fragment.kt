@@ -43,7 +43,7 @@ class Pintrest_Fragment : Fragment() {
 
         adView.adSize = AdSize.BANNER
 
-        adView.adUnitId = "ca-app-pub-3940256099942544/6300978111"
+        adView.adUnitId = "ca-app-pub-7741160545292161/2281954659"
 
         MobileAds.initialize(context)
 

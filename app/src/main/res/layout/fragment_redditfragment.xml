@@ -11,8 +11,7 @@
         android:id="@+id/MemeView"
         android:layout_marginTop="50dp"
         android:layout_width="match_parent"
-        android:layout_height="match_parent" />
-
+        android:layout_height="match_parent"/>
     <com.google.android.gms.ads.AdView
         android:id="@+id/adView"
         android:layout_width="match_parent"
@@ -20,14 +19,12 @@
         android:layout_alignParentBottom="true"
         android:layout_centerHorizontal="true"
         app:adSize="BANNER"
-        app:adUnitId="ca-app-pub-3940256099942544/6300978111" />
+        app:adUnitId="ca-app-pub-7741160545292161/2281954659" />
     <pl.droidsonroids.gif.GifImageView
         android:id="@+id/GifProgressBar"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:src="@drawable/unnamed" />
-
-
+        android:src="@drawable/mainbar_unscreen" />
 
 
 

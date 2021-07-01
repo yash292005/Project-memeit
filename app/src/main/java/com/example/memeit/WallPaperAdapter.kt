@@ -1,3 +1,5 @@
+@file:Suppress("PrivatePropertyName")
+
 package com.example.memeit
 
 import android.Manifest
@@ -23,10 +25,11 @@ import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.giphy.sdk.analytics.GiphyPingbacks
 import java.io.File
-import java.sql.Time
 
+@Suppress("PropertyName")
 class WallPaperAdapter(private val Listener: WallPaperClicked):RecyclerView.Adapter<WallPaperAdapter.ViewHolder>() {
     private val WallpaperSet: ArrayList<WallPaper> = ArrayList()
+    @Suppress("LocalVariableName")
     inner class ViewHolder(view: View):RecyclerView.ViewHolder(view){
         val WallPaperImage:ImageView = itemView.findViewById(R.id.WallPaperCover)
         val ArtistName:TextView = itemView.findViewById(R.id.ArtistName)
@@ -107,10 +110,10 @@ class WallPaperAdapter(private val Listener: WallPaperClicked):RecyclerView.Adap
         Glide
             .with(holder.itemView.context)
             .load(currentWallPaperItems.url)
+            .thumbnail(Glide.with(GiphyPingbacks.context).load(R.drawable.placeholder))
             .into(holder.WallPaperImage)
     }
     fun updateWallpaper(updateWallpaper: ArrayList<WallPaper>) {
-        WallpaperSet.clear()
         WallpaperSet.addAll(updateWallpaper)
         notifyDataSetChanged()
     }

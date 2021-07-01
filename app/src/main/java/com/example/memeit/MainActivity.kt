@@ -1,3 +1,5 @@
+@file:Suppress("DEPRECATION")
+
 package com.example.memeit
 
 /**
@@ -5,8 +7,11 @@ package com.example.memeit
  * on date 26/4/2021
  */
 
+import android.Manifest
+import android.annotation.SuppressLint
 import android.content.Context
 import android.content.Intent
+import android.content.pm.PackageManager
 import android.graphics.Color
 import android.net.Uri
 import android.os.Bundle
@@ -16,6 +21,8 @@ import androidx.appcompat.app.ActionBarDrawerToggle
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.app.AppCompatDelegate
 import androidx.browser.customtabs.CustomTabsIntent
+import androidx.core.app.ActivityCompat
+import androidx.core.content.ContextCompat
 import androidx.core.view.GravityCompat
 import androidx.drawerlayout.widget.DrawerLayout
 import androidx.fragment.app.Fragment
@@ -28,18 +35,33 @@ import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.reddit_meme_content.*
 
 
+@Suppress("LocalVariableName", "ClassName")
 class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
-        var adRequest = AdRequest.Builder().build()
+        AdRequest.Builder().build()
         mainPager.adapter = someAdapter(supportFragmentManager)
         setSupportActionBar(MainToolBar)
         supportActionBar?.setDisplayShowTitleEnabled(true)
+        if (ContextCompat.checkSelfPermission(
+                this.applicationContext,
+                Manifest.permission.WRITE_EXTERNAL_STORAGE
+            ) != (PackageManager.PERMISSION_GRANTED) && ContextCompat.checkSelfPermission(
+                this.applicationContext,
+                Manifest.permission.WRITE_EXTERNAL_STORAGE
+            ) != PackageManager.PERMISSION_GRANTED
+        ) {
+            ActivityCompat.requestPermissions(
+               this,
+                arrayOf(Manifest.permission.READ_EXTERNAL_STORAGE, Manifest.permission.WRITE_EXTERNAL_STORAGE),
+                123
+            )
+        }
         collapse.isTitleEnabled = false
         MainToolBar.title = "memeit"
         val drawerLayout = findViewById<DrawerLayout>(R.id.my_drawer_layout)
-        val toggle: ActionBarDrawerToggle = ActionBarDrawerToggle(this, drawerLayout,MainToolBar, R.string.nav_open, R.string.nav_close)
+        val toggle = ActionBarDrawerToggle(this, drawerLayout,MainToolBar, R.string.nav_open, R.string.nav_close)
         drawerLayout.addDrawerListener(toggle)
         toggle.syncState()
         UserAvatar?.setOnClickListener{
@@ -49,8 +71,7 @@ class MainActivity : AppCompatActivity() {
         }
         val sharedPreferences = getSharedPreferences("UserInput", MODE_PRIVATE)
         val key = "text"
-        val UserImage = sharedPreferences.getString(key, "")
-        when (UserImage){
+        when (sharedPreferences.getString(key, "")){
             "Susan" -> UserAvatar?.setImageResource(R.drawable.girl)
             "Mark" -> UserAvatar?.setImageResource(R.drawable.boy)
             "Elon" -> UserAvatar?.setImageResource(R.drawable.boy_1_)
@@ -64,6 +85,7 @@ class MainActivity : AppCompatActivity() {
         val navView = findViewById<NavigationView>(R.id.NavView)
         navView.setNavigationItemSelectedListener(object :
             NavigationView.OnNavigationItemSelectedListener {
+            @SuppressLint("CommitPrefEdits")
             override fun onNavigationItemSelected(item: MenuItem): Boolean {
                 when (item.itemId) {
                     R.id.signOut -> {
@@ -96,11 +118,11 @@ class MainActivity : AppCompatActivity() {
                     return true
                     }
                     R.id.share -> {
-                        Toast.makeText(this@MainActivity, "Sorry The App Has Not Been Deployed To PlayStore Yet", Toast.LENGTH_SHORT).show()
+                        Toast.makeText(this@MainActivity, "Feature Will Be Available In The Next Update Please Go To Play store Till Then", Toast.LENGTH_SHORT).show()
                         return true
                     }
                     R.id.rate -> {
-                        Toast.makeText(this@MainActivity, "Sorry The App Has Not Been Deployed To PlayStore Yet", Toast.LENGTH_SHORT).show()
+                        Toast.makeText(this@MainActivity, "Feature Will Be Available In The Next Update Please Go To Play store Till Then", Toast.LENGTH_SHORT).show()
                         return true
                     }
                     R.id.credits -> {
@@ -110,8 +132,9 @@ class MainActivity : AppCompatActivity() {
                         return true
                     }
                     R.id.Privacy -> {
-                        val intent = Intent(this@MainActivity, PrivacyPolicy::class.java)
-                        startActivity(intent)
+                        val builder = CustomTabsIntent.Builder()
+                        val CustomTabsIntent = builder.build()
+                        CustomTabsIntent.launchUrl(this@MainActivity, Uri.parse("https://memeit-0.flycricket.io/privacy.html"))
                         return true
                     }
                 }
@@ -134,11 +157,14 @@ class MainActivity : AppCompatActivity() {
 
     override fun onBackPressed() {
         finish()
+
+
     }
 
 
 }
 
+@Suppress("ClassName")
 class someAdapter(fm: FragmentManager) : FragmentPagerAdapter(fm) {
     override fun getItem(position: Int): Fragment {
         return when (position) {

@@ -1,3 +1,5 @@
+@file:Suppress("NULLABILITY_MISMATCH_BASED_ON_JAVA_ANNOTATIONS")
+
 package com.example.memeit
 
 import android.content.Context
@@ -6,21 +8,20 @@ import android.net.Uri
 import android.os.Bundle
 import android.view.*
 import android.view.inputmethod.InputMethodManager
-import androidx.fragment.app.Fragment
 import android.widget.Toast
 import androidx.appcompat.widget.SearchView
 import androidx.browser.customtabs.CustomTabsIntent
+import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.android.volley.NetworkError
 import com.android.volley.ParseError
 import com.android.volley.ServerError
 import com.android.volley.toolbox.JsonObjectRequest
-import com.giphy.sdk.analytics.GiphyPingbacks
 import com.google.android.gms.ads.*
 import kotlinx.android.synthetic.main.fragment_instafragment.*
-import kotlinx.android.synthetic.main.fragment_redditfragment.*
 
+@Suppress("LocalVariableName")
 class Instafragment : Fragment(), WallPaperAdapter.WallPaperClicked {
     lateinit var mAdView : AdView
     private lateinit var mWallpaperAdapter: WallPaperAdapter
@@ -75,17 +76,21 @@ class Instafragment : Fragment(), WallPaperAdapter.WallPaperClicked {
                 wallpaperLoader?.visibility = View.GONE
             },
             {
-                if (it is NetworkError){
-                    Toast.makeText(context, "No Internet Connection", Toast.LENGTH_SHORT).show()
-                    wallpaperLoader?.visibility = View.GONE
-                    val intent = Intent(context, errorActivity::class.java)
-                    startActivity(intent)
-                }else if (it is ParseError){
-                    Toast.makeText(context, "No Results Found", Toast.LENGTH_SHORT).show()
-                    wallpaperLoader?.visibility = View.GONE
-                }else if (it is ServerError){
-                    Toast.makeText(context, "NO Results Found", Toast.LENGTH_SHORT).show()
-                    wallpaperLoader?.visibility = View.GONE
+                when (it) {
+                    is NetworkError -> {
+                        Toast.makeText(context, "No Internet Connection", Toast.LENGTH_SHORT).show()
+                        wallpaperLoader?.visibility = View.GONE
+                        val intent = Intent(context, errorActivity::class.java)
+                        startActivity(intent)
+                    }
+                    is ParseError -> {
+                        Toast.makeText(context, "No Results Found", Toast.LENGTH_SHORT).show()
+                        wallpaperLoader?.visibility = View.GONE
+                    }
+                    is ServerError -> {
+                        Toast.makeText(context, "NO Results Found", Toast.LENGTH_SHORT).show()
+                        wallpaperLoader?.visibility = View.GONE
+                    }
                 }
 
 

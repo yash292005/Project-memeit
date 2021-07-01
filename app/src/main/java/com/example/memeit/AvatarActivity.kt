@@ -13,7 +13,6 @@ import com.giphy.sdk.analytics.GiphyPingbacks.context
 import com.xwray.groupie.GroupAdapter
 import com.xwray.groupie.Item
 import com.xwray.groupie.ViewHolder
-import kotlinx.android.synthetic.main.activity_avatar.*
 import kotlinx.android.synthetic.main.avatar_item.view.*
 
 class AvatarActivity : AppCompatActivity(){
@@ -34,6 +33,14 @@ class AvatarActivity : AppCompatActivity(){
         adapter.add(AvtarItem("Shantanu", R.drawable.man_3_))
         adapter.add(AvtarItem("Yash", R.drawable.man_4_))
     }
+
+    override fun onBackPressed() {
+        val intent = Intent(context, MainActivity::class.java)
+        intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK
+        startActivity(context, intent, Bundle())
+        super.onBackPressed()
+    }
+
     class AvtarItem(val name: String, private val image: Int) : Item<ViewHolder>() {
 
         override fun getLayout() = R.layout.avatar_item
