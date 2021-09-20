@@ -5,24 +5,27 @@
     android:layout_height="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     tools:context=".Instafragment">
-   <com.google.android.gms.ads.AdView
-       android:id="@+id/adView2"
-       android:layout_width="match_parent"
-       android:layout_height="wrap_content"
-       android:layout_alignParentBottom="true"
-       android:layout_centerHorizontal="true"
-       app:adSize="BANNER"
-       app:adUnitId="ca-app-pub-7741160545292161/2281954659" />
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:id="@+id/Fab"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="end|bottom"
+        android:layout_marginBottom="65dp"
+        android:layout_marginEnd="20dp"
+        android:contentDescription="@string/this_does_something"
+        android:src="@drawable/ic_baseline_search_24"
+        app:backgroundTint="?attr/color"
+        tools:ignore="SpeakableTextPresentCheck" />
    <androidx.recyclerview.widget.RecyclerView
        android:layout_width="match_parent"
        android:layout_height="match_parent"
-       android:layout_marginTop="50dp"
+       tools:listitem="@layout/wall_paper_item"
        android:id="@+id/WallpaperView"/>
 
-   <pl.droidsonroids.gif.GifImageView
-       android:layout_width="wrap_content"
-       android:layout_height="wrap_content"
-       android:src="@drawable/mainbar_unscreen"
+   <ProgressBar
+       android:layout_width="100dp"
+       android:layout_height="100dp"
+       android:layout_gravity="center"
        android:id="@+id/wallpaperLoader"
        />
 

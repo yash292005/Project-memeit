@@ -2,26 +2,31 @@ package com.example.memeit
 
 import android.content.Context
 import android.content.Intent
+import android.graphics.drawable.Drawable
 import android.os.Bundle
 import android.view.*
 import android.view.inputmethod.InputMethodManager
 import android.widget.Toast
 import androidx.appcompat.widget.SearchView
 import androidx.fragment.app.Fragment
+import androidx.navigation.fragment.findNavController
 import com.giphy.sdk.analytics.GiphyPingbacks
 import com.giphy.sdk.core.models.Media
 import com.giphy.sdk.core.models.enums.MediaType
 import com.giphy.sdk.ui.Giphy
+import com.giphy.sdk.ui.GiphyLoadingProvider
 import com.giphy.sdk.ui.pagination.GPHContent
 import com.giphy.sdk.ui.views.GPHGridCallback
 import com.giphy.sdk.ui.views.GiphyGridView
 import com.google.android.gms.ads.*
 import com.google.android.gms.ads.interstitial.InterstitialAd
+import com.google.android.material.floatingactionbutton.FloatingActionButton
 import kotlinx.android.synthetic.main.fragment_f_b_.*
 import timber.log.Timber
 
 class FB_Fragment : Fragment() {
     private lateinit var mAdView : AdView
+    private lateinit var searchView: SearchView
     private var mInterstitialAd: InterstitialAd? = null
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -30,11 +35,15 @@ class FB_Fragment : Fragment() {
     ): View? {
         val view = inflater.inflate(R.layout.fragment_f_b_, container, false)
         setHasOptionsMenu(true)
+        val Fab= view.findViewById<FloatingActionButton>(R.id.Fab)!!
+        Fab.setOnClickListener {
+            searchView.isIconified = false
+        }
         val adView = AdView(context)
 
         adView.adSize = AdSize.BANNER
 
-        adView.adUnitId = "ca-app-pub-7741160545292161/2281954659"
+        adView.adUnitId = "ca-app-pub-3940256099942544/6300978111"
 
         MobileAds.initialize(context)
 
@@ -49,7 +58,12 @@ class FB_Fragment : Fragment() {
         }
         return view
     }
+    private val loadingProvider = object : GiphyLoadingProvider{
+        override fun getLoadingDrawable(position: Int): Drawable {
+            return LoadingDrawable(if (position % 2 == 0) LoadingDrawable.Shape.Rect else LoadingDrawable.Shape.Circle)
+        }
 
+    }
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         setHasOptionsMenu(true)
@@ -81,6 +95,7 @@ class FB_Fragment : Fragment() {
         gridView?.spanCount = 2
         gridView?.cellPadding = 10
         gridView?.content = GPHContent.trendingStickers
+        gridView?.setGiphyLoadingProvider(loadingProvider)
         GridContainerforFB?.removeAllViews()
         GridContainerforFB?.addView(gridView)
         return gridView
@@ -91,13 +106,14 @@ class FB_Fragment : Fragment() {
         gridView?.spanCount = 2
         gridView?.cellPadding = 10
         gridView?.content = GPHContent.searchQuery(SearchInput, MediaType.sticker)
+        gridView?.setGiphyLoadingProvider(loadingProvider)
         GridContainerforFB?.removeAllViews()
         GridContainerforFB?.addView(gridView)
     }
     override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
         inflater.inflate(R.menu.search_menu, menu)
         val menuItem = menu.findItem(R.id.search_bar)
-        val searchView = menuItem.actionView as SearchView
+        searchView = menuItem.actionView as SearchView
         searchView.setOnQueryTextListener(object : SearchView.OnQueryTextListener{
             override fun onQueryTextSubmit(query: String?): Boolean {
                 if (query != null) {

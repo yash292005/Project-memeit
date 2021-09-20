@@ -9,22 +9,28 @@
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/MemeView"
-        android:layout_marginTop="50dp"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"/>
-    <com.google.android.gms.ads.AdView
-        android:id="@+id/adView"
-        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        tools:listitem="@layout/reddit_meme_content"
+        />
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:id="@+id/Fab"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true"
-        android:layout_centerHorizontal="true"
-        app:adSize="BANNER"
-        app:adUnitId="ca-app-pub-7741160545292161/2281954659" />
-    <pl.droidsonroids.gif.GifImageView
+        android:layout_gravity="end|bottom"
+        android:layout_marginBottom="65dp"
+        android:layout_marginEnd="20dp"
+        app:layout_anchorGravity="right|bottom"
+        android:contentDescription="@string/this_does_something"
+        android:src="@drawable/ic_baseline_search_24"
+        app:backgroundTint="?attr/colorPrimary"
+        tools:ignore="SpeakableTextPresentCheck" />
+    <ProgressBar
         android:id="@+id/GifProgressBar"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:src="@drawable/mainbar_unscreen" />
+        android:layout_gravity="center"
+        android:layout_width="100dp"
+        android:layout_height="100dp"
+        android:indeterminateDuration="200"/>
 
 
 

@@ -1,6 +1,53 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
-  <component name="ProjectRootManager" version="2" languageLevel="JDK_11" default="false" project-jdk-name="1.8" project-jdk-type="JavaSDK">
+  <component name="DesignSurface">
+    <option name="filePathToZoomLevelMap">
+      <map>
+        <entry key="app/src/main/res/drawable-v24/ic_launcher_foreground.xml" value="0.3072916666666667" />
+        <entry key="app/src/main/res/drawable/ic_baseline_search_24.xml" value="0.3072916666666667" />
+        <entry key="app/src/main/res/drawable/ic_baseline_share_24.xml" value="0.30132788559754853" />
+        <entry key="app/src/main/res/drawable/ic_delete.xml" value="0.3072916666666667" />
+        <entry key="app/src/main/res/drawable/ic_delete_black_36dp.xml" value="0.3072916666666667" />
+        <entry key="app/src/main/res/drawable/ic_download.xml" value="0.30132788559754853" />
+        <entry key="app/src/main/res/drawable/ic_file_download_black_36dp.xml" value="0.3072916666666667" />
+        <entry key="app/src/main/res/drawable/ic_forward_5_black_36dp.xml" value="0.26296296296296295" />
+        <entry key="app/src/main/res/drawable/ic_gallery.xml" value="0.3072916666666667" />
+        <entry key="app/src/main/res/drawable/ic_gif.xml" value="0.3072916666666667" />
+        <entry key="app/src/main/res/drawable/ic_group_3.xml" value="0.3072916666666667" />
+        <entry key="app/src/main/res/drawable/ic_launcher_background.xml" value="0.3072916666666667" />
+        <entry key="app/src/main/res/drawable/ic_memepng.xml" value="0.3072916666666667" />
+        <entry key="app/src/main/res/drawable/ic_menu_main.xml" value="0.3072916666666667" />
+        <entry key="app/src/main/res/drawable/ic_pause_black_36dp.xml" value="0.26296296296296295" />
+        <entry key="app/src/main/res/drawable/ic_play_arrow_black_36dp.xml" value="0.26296296296296295" />
+        <entry key="app/src/main/res/drawable/ic_replay_5_black_36dp.xml" value="0.26296296296296295" />
+        <entry key="app/src/main/res/drawable/ic_search.xml" value="0.3072916666666667" />
+        <entry key="app/src/main/res/drawable/ic_send_black_36dp.xml" value="0.3072916666666667" />
+        <entry key="app/src/main/res/drawable/ic_sticker.xml" value="0.3072916666666667" />
+        <entry key="app/src/main/res/drawable/progress_bg.xml" value="0.3072916666666667" />
+        <entry key="app/src/main/res/drawable/second_search.xml" value="0.3072916666666667" />
+        <entry key="app/src/main/res/layout/activity_error.xml" value="0.2869791666666667" />
+        <entry key="app/src/main/res/layout/activity_main.xml" value="0.33" />
+        <entry key="app/src/main/res/layout/activity_sign_in.xml" value="0.2869791666666667" />
+        <entry key="app/src/main/res/layout/activity_splash_screen.xml" value="0.2869791666666667" />
+        <entry key="app/src/main/res/layout/avatar_item.xml" value="0.2869791666666667" />
+        <entry key="app/src/main/res/layout/fragment_f_b_.xml" value="0.2869791666666667" />
+        <entry key="app/src/main/res/layout/fragment_instafragment.xml" value="0.2869791666666667" />
+        <entry key="app/src/main/res/layout/fragment_pintrest_.xml" value="0.2869791666666667" />
+        <entry key="app/src/main/res/layout/fragment_redditfragment.xml" value="0.2869791666666667" />
+        <entry key="app/src/main/res/layout/meme_video_controler.xml" value="0.2869791666666667" />
+        <entry key="app/src/main/res/layout/nav_header.xml" value="0.2869791666666667" />
+        <entry key="app/src/main/res/layout/reddit_meme_content.xml" value="0.2869791666666667" />
+        <entry key="app/src/main/res/layout/reddit_video_meme_content.xml" value="0.17137096774193547" />
+        <entry key="app/src/main/res/layout/wall_paper_item.xml" value="0.4767277856135402" />
+        <entry key="app/src/main/res/menu/navigation_menu.xml" value="0.2869791666666667" />
+        <entry key="app/src/main/res/menu/search_menu.xml" value="0.2869791666666667" />
+        <entry key="app/src/main/res/mipmap-anydpi-v26/ic_launcher.xml" value="0.3072916666666667" />
+        <entry key="app/src/main/res/mipmap-anydpi-v26/memeit_icon.xml" value="0.3072916666666667" />
+        <entry key="app/src/main/res/mipmap-anydpi-v26/memeit_icon_round.xml" value="0.3072916666666667" />
+      </map>
+    </option>
+  </component>
+  <component name="ProjectRootManager" version="2" languageLevel="JDK_11" default="true" project-jdk-name="1.8" project-jdk-type="JavaSDK">
     <output url="file://$PROJECT_DIR$/build/classes" />
   </component>
   <component name="ProjectType">

@@ -19,11 +19,8 @@ import com.google.firebase.auth.GoogleAuthProvider
 import com.google.firebase.auth.ktx.auth
 import com.google.firebase.ktx.Firebase
 import kotlinx.android.synthetic.main.activity_sign_in.*
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.GlobalScope
-import kotlinx.coroutines.launch
+import kotlinx.coroutines.*
 import kotlinx.coroutines.tasks.await
-import kotlinx.coroutines.withContext
 
 
 class SignInActivity : AppCompatActivity() {
@@ -62,6 +59,7 @@ class SignInActivity : AppCompatActivity() {
 
     }
 
+    @DelicateCoroutinesApi
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
         if (requestCode == RC_SIGN_IN) {
@@ -70,21 +68,23 @@ class SignInActivity : AppCompatActivity() {
         }
     }
 
+    @DelicateCoroutinesApi
     private fun handleSignInResult(completedTask: Task<GoogleSignInAccount>?) {
         try {
             val account = completedTask?.getResult(ApiException::class.java)!!
-            val intent = Intent(this, MainActivity::class.java)
+            val intent = Intent(this, AvatarActivity::class.java)
             startActivity(intent)
             finish()
-            Log.d(TAG, "firebaseAuthWithGoogle:" + account.id)
+            Toast.makeText(this, "firebaseAuthWithGoogle:" + account.id, Toast.LENGTH_SHORT).show()
             firebaseAuthWithGoogle(account.idToken!!)
         } catch (e: ApiException) {
-            Log.w(TAG, "signInResult:failed code=" + e.statusCode)
+            Toast.makeText(this, "signInResult:failed code=" + e.statusCode, Toast.LENGTH_SHORT).show()
             Toast.makeText(context, "Sorry Cant Sign User In", Toast.LENGTH_SHORT).show()
 
         }
     }
 
+    @DelicateCoroutinesApi
     private fun firebaseAuthWithGoogle(idToken: String) {
         val credential = GoogleAuthProvider.getCredential(idToken, null)
         signInButton.visibility = View.GONE

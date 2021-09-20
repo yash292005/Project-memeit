@@ -5,7 +5,6 @@ package com.example.memeit
 
 import android.content.Context
 import android.content.Context.INPUT_METHOD_SERVICE
-import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
 import android.view.*
@@ -19,14 +18,16 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.android.volley.*
 import com.android.volley.toolbox.JsonObjectRequest
-import com.google.android.gms.ads.*
+import com.google.android.material.floatingactionbutton.FloatingActionButton
 import kotlinx.android.synthetic.main.fragment_redditfragment.*
+import org.json.JSONException
 
 
 class redditfragment : Fragment(), MyAdapter.theItemClicked {
     private lateinit var mAdapter: MyAdapter
-    private lateinit var mAdView: AdView
+    private lateinit var searchView: SearchView
     private var isScrolling: Boolean = false
+
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -37,7 +38,10 @@ class redditfragment : Fragment(), MyAdapter.theItemClicked {
         val manager = LinearLayoutManager(requireContext())
         val rootView = inflater.inflate(R.layout.fragment_redditfragment, container, false)
         val recyclerView = rootView.findViewById<RecyclerView>(R.id.MemeView)
-        val adRequest = AdRequest.Builder().build()
+        val Fab = rootView.findViewById<FloatingActionButton>(R.id.Fab)!!
+        Fab.setOnClickListener {
+            searchView.isIconified = false
+        }
         recyclerView?.setHasFixedSize(true)
         recyclerView?.layoutManager = manager
         mAdapter = MyAdapter(this)
@@ -58,7 +62,7 @@ class redditfragment : Fragment(), MyAdapter.theItemClicked {
                 val scrollOutItems = manager.findFirstVisibleItemPosition()
                 if (isScrolling and (currentItems + scrollOutItems >= totalItems - 4)) {
                     isScrolling = false
-                    val randomItems = arrayOf("IndianMeyMeys", "indiameme", "memes", "india")
+                    val randomItems = arrayOf("IndianMeyMeys", "indiameme", "memes", "india", "AdviceAnimals", "MemeEconomy", "IndianDankMemes", "terriblefacebookmemes", "ComedyCentral", "me_irl", "dankmemes")
                     val randomMemes = randomItems.random()
                     fetchData(randomMemes)
 
@@ -66,30 +70,19 @@ class redditfragment : Fragment(), MyAdapter.theItemClicked {
                 }
             }
         })
-
         GifProgressBar?.visibility = View.VISIBLE
         val randomItems = arrayOf(
             "AdviceAnimals",
             "MemeEconomy",
             "IndianDankMemes",
             "terriblefacebookmemes",
-            "me_irl"
+            "ComedyCentral",
+            "me_irl",
+            "dankmemes"
         )
         val randomMemes2 = randomItems.random()
         fetchData(randomMemes2)
         GifProgressBar?.visibility = View.GONE
-        MobileAds.initialize(context)
-        val adView = AdView(context)
-        adView.adSize = AdSize.BANNER
-        adView.adUnitId = "ca-app-pub-7741160545292161/2281954659"
-        mAdView = rootView.findViewById(R.id.adView)
-        mAdView.loadAd(adRequest)
-        mAdView.adListener = object : AdListener() {
-
-            override fun onAdFailedToLoad(adError: LoadAdError) {
-                mAdView.loadAd(adRequest)
-            }
-        }
         return rootView
 
     }
@@ -103,11 +96,12 @@ class redditfragment : Fragment(), MyAdapter.theItemClicked {
     override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
         inflater.inflate(R.menu.search_menu, menu)
         val menuItem = menu.findItem(R.id.search_bar)
-        val searchView = menuItem.actionView as SearchView
+        searchView = menuItem.actionView as SearchView
+        searchView.isIconified = true
         searchView.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
             override fun onQueryTextSubmit(query: String?): Boolean {
                 if (query != null) {
-                    fetchData(query)
+                    fetchDataOnSearch(query)
 
                     Toast.makeText(context, "Searching for $query", Toast.LENGTH_SHORT).show()
                     dismissKeyboard(context)
@@ -130,7 +124,7 @@ class redditfragment : Fragment(), MyAdapter.theItemClicked {
 
     private fun fetchData(Memes: String) {
 
-        val urll = "https://memeit-api.herokuapp.com/$Memes/70/"
+        val urll = "https://memeit-api-v2.herokuapp.com/$Memes"
 
         val jsonObjectRequest = JsonObjectRequest(Request.Method.GET, urll, null,
             { response ->
@@ -139,6 +133,7 @@ class redditfragment : Fragment(), MyAdapter.theItemClicked {
                 for (i in 0 until memeJsonArray.length()) {
                     val memeJsonObject = memeJsonArray.getJSONObject(i)
                     val meme = Memes(
+                        memeJsonObject.getString("audio_url"),
                         memeJsonObject.getString("subreddit"),
                         memeJsonObject.getString("title"),
                         memeJsonObject.getString("url")
@@ -147,36 +142,52 @@ class redditfragment : Fragment(), MyAdapter.theItemClicked {
                 }
                 mAdapter.updateMeme(memeArray)
                 GifProgressBar?.visibility = View.GONE
-                if (memeJsonArray.length() <= 6){
-                    Toast.makeText(context, "no value found", Toast.LENGTH_SHORT).show()
-                }
+                if (memeJsonArray.length() <= 6) {
+                    print("null value returned")                }
             },
-            { error ->
-                val response: NetworkResponse = error.networkResponse
-                when {
-                    error is NetworkError -> {
-                        Toast.makeText(context, "No Internet Connection", Toast.LENGTH_SHORT).show()
-                        GifProgressBar?.visibility = View.GONE
-                        val intent = Intent(context, errorActivity::class.java)
-                        startActivity(intent)
-                    }
-                    error is ParseError -> {
-                        Toast.makeText(context, "No Results Found", Toast.LENGTH_SHORT).show()
-                        GifProgressBar?.visibility = View.GONE
-                    }
-                    error is ServerError -> {
-                        Toast.makeText(context, "No Results Found", Toast.LENGTH_SHORT).show()
-                    }
-                    response.statusCode == 400 -> {
-                        Toast.makeText(context, "No results Found", Toast.LENGTH_SHORT).show()
-                    }
-                }
-
-
+            {
+                Toast.makeText(context, "Some Error Occured...", Toast.LENGTH_SHORT).show()
             }
         )
         context?.let { MySingleton.getInstance(it).addToRequestQueue(jsonObjectRequest) }
     }
+
+    private fun fetchDataOnSearch(Memes: String) {
+        val urll = "https://memeit-api-v2.herokuapp.com/$Memes"
+        try {
+            val jsonObjectRequest = JsonObjectRequest(Request.Method.GET, urll, null,
+                { response ->
+                    val memeJsonArray = response.getJSONArray("memes")
+                    val memeArray = ArrayList<Memes>()
+                    for (i in 0 until memeJsonArray.length()) {
+                        val memeJsonObject = memeJsonArray.getJSONObject(i)
+                        val meme = Memes(
+                            memeJsonObject.getString("audio_url"),
+                            memeJsonObject.getString("subreddit"),
+                            memeJsonObject.getString("title"),
+                            memeJsonObject.getString("url")
+
+                        )
+                        memeArray.add(meme)
+                    }
+                    mAdapter.updateMemeOnSearch(memeArray)
+                    GifProgressBar?.visibility = View.GONE
+                    if (memeJsonArray.length() <= 6) {
+                        print("null value returned")
+                    }
+                },
+                {
+                    Toast.makeText(context, "No Results Found  ", Toast.LENGTH_SHORT).show()
+
+                }
+            )
+            context?.let { MySingleton.getInstance(it).addToRequestQueue(jsonObjectRequest) }
+        }
+        catch (e: JSONException){
+            Toast.makeText(context, "No Results Found  ", Toast.LENGTH_SHORT).show()
+        }
+    }
+
 
 }
 

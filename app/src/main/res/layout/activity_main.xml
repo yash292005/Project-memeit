@@ -6,13 +6,15 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:id="@+id/my_drawer_layout"
-    tools:openDrawer="start"
+
+    android:background="?attr/colorSecondaryVariant"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     tools:context=".MainActivity">
 
     <androidx.coordinatorlayout.widget.CoordinatorLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        android:contentDescription="@string/offline_opt_in_message">
 
         <com.google.android.material.appbar.AppBarLayout
             android:id="@+id/appBarLayout"
@@ -23,29 +25,30 @@
                 android:id="@+id/collapse"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:background="?attr/colorSecondaryVariant"
-                app:layout_scrollFlags="scroll|enterAlways"
-                app:title="memeit">
+                app:layout_scrollFlags="scroll|enterAlways">
 
                 <androidx.appcompat.widget.Toolbar
+                    android:backgroundTint="?attr/colorBackgroundFloating"
                     android:id="@+id/MainToolBar"
                     android:layout_width="match_parent"
                     android:layout_height="?attr/actionBarSize"
-                    android:background="?attr/colorSecondaryVariant"
-                    app:title="memeit"
-                    app:titleTextColor="@color/white">
+                    android:background="?attr/colorPrimaryVariant">
 
-                        <de.hdodenhof.circleimageview.CircleImageView
-                            android:id="@+id/UserAvatar"
-                            android:layout_width="35dp"
-                            android:layout_height="35dp"
-                            android:src="@drawable/man"
-                            app:layout_constraintBottom_toBottomOf="parent"
-                            app:layout_constraintEnd_toEndOf="parent"
-                            app:layout_constraintHorizontal_bias="0.73"
-                            app:layout_constraintStart_toStartOf="parent"
-                            app:layout_constraintTop_toTopOf="parent"
-                            app:layout_constraintVertical_bias="0.0" />
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:fontFamily="@font/sacramento"
+                        android:textColor="?attr/colorOnBackground"
+                        android:text="@string/memeit"
+                        android:textSize="40sp" />
+                    <de.hdodenhof.circleimageview.CircleImageView
+                        android:id="@+id/UserAvatar"
+                        android:layout_width="35dp"
+                        android:layout_height="35dp"
+                        android:src="@drawable/man"
+                        android:layout_gravity="end"
+                        android:layout_marginEnd="20dp"
+                        />
                 </androidx.appcompat.widget.Toolbar>
 
 
@@ -57,25 +60,25 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         app:layout_behavior="@string/appbar_scrolling_view_behavior"
-        android:theme="@style/LightTheme"
+        android:theme="@style/Theme.memeit"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent" >
 
         <com.google.android.material.tabs.TabLayout
             android:id="@+id/tabLayout"
+            android:background="?attr/colorBackgroundFloating"
+            app:tabGravity="fill"
+            app:tabMode="fixed"
             android:layout_width="match_parent"
             android:layout_height="50dp"
-            android:layout_marginBottom="61dp"
-            android:background="?attr/colorOnPrimary" />
+            />
     </androidx.viewpager.widget.ViewPager>
     </androidx.coordinatorlayout.widget.CoordinatorLayout>
     <com.google.android.material.navigation.NavigationView
         android:layout_width="wrap_content"
         android:layout_height="match_parent"
         android:layout_gravity="start"
-        android:background="#F1DDF8"
-        app:itemTextColor="@color/black"
         android:id="@+id/NavView"
         app:headerLayout="@layout/nav_header"
         app:menu="@menu/navigation_menu"/>

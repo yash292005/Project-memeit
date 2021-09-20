@@ -3,6 +3,7 @@ package com.example.memeit
 import android.app.Dialog
 import android.content.Context
 import android.content.Intent
+import android.graphics.drawable.Drawable
 import android.os.Bundle
 import android.util.Log
 import android.util.Log.d
@@ -19,6 +20,7 @@ import com.giphy.sdk.core.models.Media
 import com.giphy.sdk.core.models.enums.MediaType
 import com.giphy.sdk.ui.GPHContentType
 import com.giphy.sdk.ui.Giphy
+import com.giphy.sdk.ui.GiphyLoadingProvider
 import com.giphy.sdk.ui.pagination.GPHContent
 import com.giphy.sdk.ui.universallist.SmartItemType
 import com.giphy.sdk.ui.views.GPHGridCallback
@@ -26,11 +28,13 @@ import com.giphy.sdk.ui.views.GiphyDialogFragment
 import com.giphy.sdk.ui.views.GiphyGridView
 import com.giphy.sdk.ui.views.GiphyGridView.Companion.VERTICAL
 import com.google.android.gms.ads.*
+import com.google.android.material.floatingactionbutton.FloatingActionButton
 import kotlinx.android.synthetic.main.fragment_pintrest_.*
 import timber.log.Timber
 
 class Pintrest_Fragment : Fragment() {
     lateinit var mAdView : AdView
+    private lateinit var searchView: SearchView
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
@@ -39,11 +43,14 @@ class Pintrest_Fragment : Fragment() {
         // Inflate the layout for this fragment
        val view = inflater.inflate(R.layout.fragment_pintrest_, container, false)
         setHasOptionsMenu(true)
+        val Fab= view.findViewById<FloatingActionButton>(R.id.Fab)!!
+        Fab.setOnClickListener { searchView.isIconified = false
+        }
         val adView = AdView(context)
 
         adView.adSize = AdSize.BANNER
 
-        adView.adUnitId = "ca-app-pub-7741160545292161/2281954659"
+        adView.adUnitId = "ca-app-pub-3940256099942544/6300978111"
 
         MobileAds.initialize(context)
 
@@ -59,13 +66,17 @@ class Pintrest_Fragment : Fragment() {
         return view
 
     }
+    private val loadingProvider = object : GiphyLoadingProvider {
+        override fun getLoadingDrawable(position: Int): Drawable {
+            return LoadingDrawable(if (position % 2 == 0) LoadingDrawable.Shape.Rect else LoadingDrawable.Shape.Circle)
+        }
 
+}
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
 
         super.onViewCreated(view, savedInstanceState)
         setHasOptionsMenu(true)
         this.context?.let { Giphy.configure(it,"47kzPjMbjORmE51J07WxzhkEQTvkQTMl" ) }
-//        setTrendingQuery()
         val gridView = setTrendingQuery()
 
 
@@ -96,6 +107,7 @@ class Pintrest_Fragment : Fragment() {
         gridView?.spanCount = 2
         gridView?.cellPadding = 10
         gridView?.content = GPHContent.trendingGifs
+        gridView?.setGiphyLoadingProvider(loadingProvider)
         GridContainer?.removeAllViews()
         GridContainer?.addView(gridView)
         return gridView
@@ -106,6 +118,7 @@ class Pintrest_Fragment : Fragment() {
         gridView?.spanCount = 2
         gridView?.cellPadding = 10
         gridView?.content = GPHContent.searchQuery(SearchInput, MediaType.gif)
+        gridView?.setGiphyLoadingProvider(loadingProvider)
         GridContainer?.removeAllViews()
         GridContainer?.addView(gridView)
     }
@@ -116,7 +129,7 @@ class Pintrest_Fragment : Fragment() {
     override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
         inflater.inflate(R.menu.search_menu, menu)
         val menuItem = menu.findItem(R.id.search_bar)
-        val searchView = menuItem.actionView as SearchView
+        searchView = menuItem.actionView as SearchView
         searchView.setOnQueryTextListener(object : SearchView.OnQueryTextListener{
             override fun onQueryTextSubmit(query: String?): Boolean {
                 if (query != null) {

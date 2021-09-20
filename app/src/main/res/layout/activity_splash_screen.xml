@@ -8,7 +8,7 @@
     android:background="#080823">
 
 
-    <pl.droidsonroids.gif.GifImageView
+    <ImageView
         android:id="@+id/gifImageView"
         android:layout_width="wrap_content"
         android:layout_height="542dp"
@@ -20,17 +20,18 @@
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.29000002" />
+        app:layout_constraintVertical_bias="0.29000002"
+        android:contentDescription="@string/don_t_know_what_i_m_doing" />
 
 
     <TextView
         android:id="@+id/textView"
         android:layout_width="404dp"
         android:layout_height="56dp"
-        android:text="MEMEIT"
+        android:text="@string/memeit_second"
         android:textAlignment="center"
         android:textColor="@color/white"
-        android:textSize="20dp"
+        android:textSize="20sp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.428"
@@ -42,10 +43,10 @@
         android:id="@+id/textView2"
         android:layout_width="match_parent"
         android:layout_height="56dp"
-        android:text="LOADING..."
+        android:text="@string/loading"
         android:textAlignment="center"
         android:textColor="@color/white"
-        android:textSize="20dp"
+        android:textSize="20sp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
@@ -53,15 +54,17 @@
         app:layout_constraintTop_toBottomOf="@+id/gifImageView"
         app:layout_constraintVertical_bias="0.411" />
 
-    <pl.droidsonroids.gif.GifImageView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+    <ImageView
+        android:layout_width="55dp"
+        android:layout_height="55dp"
         android:src="@drawable/poweredby_100px_badge"
+        android:id="@+id/Promotion"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.948"
         app:layout_constraintStart_toStartOf="@+id/gifImageView"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.968" />
+        app:layout_constraintVertical_bias="0.968"
+        android:contentDescription="@string/don_t_know_what_i_m_doing" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

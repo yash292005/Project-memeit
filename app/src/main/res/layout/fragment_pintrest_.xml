@@ -3,8 +3,19 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     tools:context=".Pintrest_Fragment">
-
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:id="@+id/Fab"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="end|bottom"
+        android:layout_marginBottom="65dp"
+        android:layout_marginEnd="20dp"
+        android:contentDescription="@string/this_does_something"
+        android:src="@drawable/ic_baseline_search_24"
+        app:backgroundTint="?attr/colorPrimary"
+        tools:ignore="SpeakableTextPresentCheck" />
     <androidx.gridlayout.widget.GridLayout
         android:layout_marginBottom="50dp"
         android:layout_width="match_parent"
@@ -21,5 +32,5 @@
         android:layout_centerHorizontal="true"
         android:layout_alignParentBottom="true"
         ads:adSize="BANNER"
-        ads:adUnitId="ca-app-pub-7741160545292161/2281954659" />
+        ads:adUnitId="ca-app-pub-3940256099942544/6300978111" />
 </FrameLayout>

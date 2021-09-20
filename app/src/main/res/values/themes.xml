@@ -1,19 +1,24 @@
 <resources xmlns:tools="http://schemas.android.com/tools" xmlns:android="http://schemas.android.com/apk/res/android">
     <!-- Base application theme. -->
-    <style name="LightTheme" parent="Theme.MaterialComponents.DayNight.NoActionBar">
+    <style name="Theme.memeit" parent="Theme.MaterialComponents.DayNight.NoActionBar">
         <!-- Primary brand color. -->
-        <item name="colorPrimary">@color/OnPrimaryColor</item>
-        <item name="colorPrimaryVariant">@color/OnPrimaryColor</item>
+        <item name="colorPrimary">#FF00C7</item>
+        <item name="colorPrimaryVariant">#6A1ECB</item>
         <item name="colorOnPrimary">@color/PrimaryVarient</item>
         <!-- Secondary brand color. -->
-        <item name="colorSecondary">#FFFFFF</item>
-        <item name="colorSecondaryVariant">@color/Primarycolor</item>
+        <item name="colorSecondary">#F5EAF4</item>
+        <item name="color">@color/teal_200</item>
+        <item name="colorSecondaryVariant">#FCFCFC</item>
+        <item name="background">@color/MainColorDark</item>
+        <item name="colorOnBackground">@color/darkTheme</item>
+        <item name="colorBackgroundFloating">@color/white</item>
+        <item name="colorAccent">#FF00C7</item>
         <!-- Status bar color. -->
         <item name="android:statusBarColor" tools:targetApi="l">#C60087</item>
         <!-- Customize your theme here. -->
     </style>
 
-    <style name="LightTheme.NoActionBar">
+    <style name="Theme.memeit.NoActionBar">
         <item name="windowActionBar">false</item>
         <item name="windowNoTitle">true</item>
     </style>
@@ -21,7 +26,7 @@
     <style name="Theme.Memeit.AppBarOverlay" parent="ThemeOverlay.AppCompat.Dark.ActionBar"/>
 
 
-    <style name="LightTheme.AppBarOverlay" parent="ThemeOverlay.AppCompat.Dark.ActionBar" />
+    <style name="Theme.memeit.AppBarOverlay" parent="ThemeOverlay.AppCompat.Dark.ActionBar" />
 
-    <style name="LightTheme.PopupOverlay" parent="ThemeOverlay.AppCompat.Light" />
+    <style name="Theme.memeit.PopupOverlay" parent="ThemeOverlay.AppCompat.Light" />
 </resources>

@@ -4,7 +4,7 @@
     android:layout_width="match_parent"
     android:layout_height="176dp">
 
-    <pl.droidsonroids.gif.GifImageView
+    <ImageView
         android:id="@+id/gifImageView2"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -12,6 +12,7 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="parent"
+        android:contentDescription="@string/don_t_know_what_i_m_doing" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

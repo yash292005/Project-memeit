@@ -4,14 +4,15 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/white"
     tools:context=".errorActivity">
 
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="NO Internet Connection!"
+        android:text="@string/some_error_occured"
         android:textColor="@color/black"
-        android:textSize="20dp"
+        android:textSize="20sp"
         android:textStyle="bold"
         app:layout_constraintBottom_toTopOf="@+id/gifImageView4"
         app:layout_constraintEnd_toEndOf="parent"
@@ -24,9 +25,9 @@
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Please Check Your Internet Connection And Try Again..."
+        android:text="@string/please_check_your_internet_connection_and_try_again"
         android:textColor="@color/black"
-        android:textSize="15dp"
+        android:textSize="15sp"
         android:textStyle="bold"
         android:padding="10dp"
         app:layout_constraintBottom_toTopOf="@+id/gifImageView4"
@@ -36,7 +37,7 @@
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.69" />
 
-    <pl.droidsonroids.gif.GifImageView
+    <ImageView
         android:id="@+id/gifImageView4"
         android:layout_width="match_parent"
         android:layout_height="435dp"
@@ -46,14 +47,15 @@
         app:layout_constraintHorizontal_bias="0.4"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.553" />
+        app:layout_constraintVertical_bias="0.553"
+        android:contentDescription="@string/don_t_know_what_i_m_doing" />
 
     <Button
         android:id="@+id/retryButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:background="@color/Primarycolor"
-        android:text="retry"
+        android:text="@string/retry"
+        android:textColor="@color/white"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.498"

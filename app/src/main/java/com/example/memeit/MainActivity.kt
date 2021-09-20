@@ -12,7 +12,6 @@ import android.annotation.SuppressLint
 import android.content.Context
 import android.content.Intent
 import android.content.pm.PackageManager
-import android.graphics.Color
 import android.net.Uri
 import android.os.Bundle
 import android.view.MenuItem
@@ -28,10 +27,12 @@ import androidx.drawerlayout.widget.DrawerLayout
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
 import androidx.fragment.app.FragmentPagerAdapter
+import com.bumptech.glide.Glide
 import com.google.android.gms.ads.AdRequest
 import com.google.android.material.navigation.NavigationView
 import com.google.firebase.auth.FirebaseAuth
 import kotlinx.android.synthetic.main.activity_main.*
+import kotlinx.android.synthetic.main.nav_header.*
 import kotlinx.android.synthetic.main.reddit_meme_content.*
 
 
@@ -43,7 +44,6 @@ class MainActivity : AppCompatActivity() {
         AdRequest.Builder().build()
         mainPager.adapter = someAdapter(supportFragmentManager)
         setSupportActionBar(MainToolBar)
-        supportActionBar?.setDisplayShowTitleEnabled(true)
         if (ContextCompat.checkSelfPermission(
                 this.applicationContext,
                 Manifest.permission.WRITE_EXTERNAL_STORAGE
@@ -59,7 +59,6 @@ class MainActivity : AppCompatActivity() {
             )
         }
         collapse.isTitleEnabled = false
-        MainToolBar.title = "memeit"
         val drawerLayout = findViewById<DrawerLayout>(R.id.my_drawer_layout)
         val toggle = ActionBarDrawerToggle(this, drawerLayout,MainToolBar, R.string.nav_open, R.string.nav_close)
         drawerLayout.addDrawerListener(toggle)
@@ -109,12 +108,10 @@ class MainActivity : AppCompatActivity() {
                     R.id.ChangeTheTheme -> {
                        val theme = AppCompatDelegate.MODE_NIGHT_YES
                         AppCompatDelegate.setDefaultNightMode(theme)
-                        mainPager.setBackgroundColor(Color.rgb(8, 8, 53))
                         return true
                     }R.id.ChangeTheme2 ->{
                     val theme2 = AppCompatDelegate.MODE_NIGHT_NO
                     AppCompatDelegate.setDefaultNightMode(theme2)
-                    mainPager.setBackgroundColor(Color.rgb(185, 250, 248))
                     return true
                     }
                     R.id.share -> {
@@ -146,7 +143,7 @@ class MainActivity : AppCompatActivity() {
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
         supportActionBar?.setHomeButtonEnabled(true)
         supportActionBar?.setHomeAsUpIndicator(R.drawable.ic_menu_main)
-        supportActionBar?.title = "memeit"
+        supportActionBar?.setDisplayShowTitleEnabled(false)
         tabLayout.setupWithViewPager(mainPager)
         tabLayout.getTabAt(0)?.setIcon(R.drawable.ic_memepng)
         tabLayout.getTabAt(1)?.setIcon(R.drawable.ic_gif)

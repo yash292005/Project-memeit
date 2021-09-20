@@ -3,6 +3,7 @@
 package com.example.memeit
 
 import android.Manifest
+import android.annotation.SuppressLint
 import android.app.Activity
 import android.app.DownloadManager
 import android.content.Context
@@ -24,17 +25,25 @@ import androidx.core.content.ContextCompat.startActivity
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.giphy.sdk.analytics.GiphyPingbacks
+import com.google.android.gms.ads.AdListener
+import com.google.android.gms.ads.AdRequest
+import com.google.android.gms.ads.AdView
+import com.google.android.gms.ads.LoadAdError
 import java.io.File
 
 @Suppress("PropertyName")
 class WallPaperAdapter(private val Listener: WallPaperClicked):RecyclerView.Adapter<WallPaperAdapter.ViewHolder>() {
     private val WallpaperSet: ArrayList<WallPaper> = ArrayList()
+    @SuppressLint("NotifyDataSetChanged")
     @Suppress("LocalVariableName")
     inner class ViewHolder(view: View):RecyclerView.ViewHolder(view){
         val WallPaperImage:ImageView = itemView.findViewById(R.id.WallPaperCover)
         val ArtistName:TextView = itemView.findViewById(R.id.ArtistName)
         val DownloadButton: ImageView = itemView.findViewById(R.id.DownloadButtonWallpaper)
         val ShareButton: ImageView = itemView.findViewById(R.id.ShareButtonWallpaper)
+        val DeleteButton: ImageView = itemView.findViewById(R.id.DeleteCard)
+        val wallpaperAd:AdView = itemView.findViewById(R.id.adView2)
+        val mAdView: AdView = itemView.findViewById(R.id.adView2)
         init {
             ShareButton.setOnClickListener {
                 val currentImageItems = WallpaperSet[adapterPosition]
@@ -43,6 +52,10 @@ class WallPaperAdapter(private val Listener: WallPaperClicked):RecyclerView.Adap
                 i.putExtra(Intent.EXTRA_TEXT, "Hi, checkout this WallPaper ${currentImageItems.url}")
                 startActivity(it.context, Intent.createChooser(i, "share this WallPaper with"), Bundle())
 
+            }
+            DeleteButton.setOnClickListener{
+                WallpaperSet.removeAt(adapterPosition)
+                notifyDataSetChanged()
             }
             DownloadButton.setOnClickListener {
                 if (ContextCompat.checkSelfPermission(
@@ -107,14 +120,33 @@ class WallPaperAdapter(private val Listener: WallPaperClicked):RecyclerView.Adap
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         val currentWallPaperItems = WallpaperSet[position]
         holder.ArtistName.text = currentWallPaperItems.photographer
+        holder.wallpaperAd.visibility = View.GONE
+        val adRequest = AdRequest.Builder().build()
+        holder.mAdView.loadAd(adRequest)
+        holder.mAdView.adListener = object : AdListener(){
+
+            override fun onAdFailedToLoad(adError : LoadAdError) {
+                holder.mAdView.loadAd(adRequest)
+            }
+        }
+        if (position%3 == 0){
+            holder.wallpaperAd.visibility = View.VISIBLE
+        }
         Glide
             .with(holder.itemView.context)
             .load(currentWallPaperItems.url)
             .thumbnail(Glide.with(GiphyPingbacks.context).load(R.drawable.placeholder))
             .into(holder.WallPaperImage)
     }
+    @SuppressLint("NotifyDataSetChanged")
     fun updateWallpaper(updateWallpaper: ArrayList<WallPaper>) {
         WallpaperSet.addAll(updateWallpaper)
+        notifyDataSetChanged()
+    }
+    @SuppressLint("NotifyDataSetChanged")
+    fun updateWallpaperOnSearch(updateWallPaperOnSearch: ArrayList<WallPaper>){
+        WallpaperSet.clear()
+        WallpaperSet.addAll(updateWallPaperOnSearch)
         notifyDataSetChanged()
     }
 

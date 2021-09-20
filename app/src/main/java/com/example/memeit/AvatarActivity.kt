@@ -14,6 +14,7 @@ import com.xwray.groupie.GroupAdapter
 import com.xwray.groupie.Item
 import com.xwray.groupie.ViewHolder
 import kotlinx.android.synthetic.main.avatar_item.view.*
+import kotlinx.coroutines.tasks.await
 
 class AvatarActivity : AppCompatActivity(){
 
@@ -50,6 +51,7 @@ class AvatarActivity : AppCompatActivity(){
             viewHolder.itemView.AvatarName.text = name
             viewHolder.itemView.AvatarImage.load(image)
             viewHolder.itemView.AvatarImage.setOnClickListener {
+
                 val sharedPref = it.context.getSharedPreferences("UserInput", Context.MODE_PRIVATE)
                 val editor = sharedPref.edit()
                 editor.clear()
